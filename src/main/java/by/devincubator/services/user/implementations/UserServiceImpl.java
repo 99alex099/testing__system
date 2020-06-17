@@ -4,10 +4,8 @@ import by.devincubator.repository.RoleRepository;
 import by.devincubator.repository.UserRepository;
 import by.devincubator.entities.Role;
 import by.devincubator.entities.User;
-import by.devincubator.services.user.exceptions.UserIdIsIncorrectException;
-import by.devincubator.services.user.exceptions.UserNameExistsException;
-import by.devincubator.services.user.exceptions.UserNotFoundByFirstNameAndLastNameException;
-import by.devincubator.services.user.exceptions.UserNotFoundByLoginException;
+import by.devincubator.services.admin.admindto.UserDTO;
+import by.devincubator.services.user.exceptions.*;
 import by.devincubator.services.user.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +25,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public User findUserById(Integer id) {
@@ -72,6 +71,31 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public void deleteUser(User user) {
         userRepository.delete(user);
+    }
+
+    @Override
+    public User saveUserDTO(UserDTO userDTO) {
+
+        try {
+            User user = findByLogin(userDTO.getLogin());
+            if (user != null) {
+                throw new UserAlreadyExistsException("User with the login " + userDTO.getLogin() + " already exists");
+            }
+        } catch (UserNotFoundByLoginException e) {
+        }
+
+        User userForSaving = User.builder()
+                .firstName(userDTO.getFirstName())
+                .lastName(userDTO.getLastName())
+                .patronymic(userDTO.getPatronymic())
+                .login(userDTO.getLogin())
+                .password(bCryptPasswordEncoder.encode(userDTO.getPassword()))
+                .isApproved(true)
+                .email(userDTO.getEmail())
+                .roleList(userDTO.getRoleList())
+                .build();
+
+        return userRepository.save(userForSaving);
     }
 
     @Override
