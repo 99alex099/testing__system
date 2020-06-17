@@ -3,6 +3,7 @@ package by.devincubator.services.user.implementations;
 import by.devincubator.repository.RoleRepository;
 import by.devincubator.entities.Role;
 import by.devincubator.services.user.exceptions.RoleIdIsIncorrectException;
+import by.devincubator.services.user.exceptions.RoleNameNotFoundException;
 import by.devincubator.services.user.interfaces.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
