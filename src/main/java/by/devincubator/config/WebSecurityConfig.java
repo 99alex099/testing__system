@@ -45,7 +45,11 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+                .antMatchers("/registration").not().fullyAuthenticated()
+                .antMatchers("/creationOptions").hasRole("ADMIN")
 
+
+                //users
                 .antMatchers("/choose_topic").access("hasRole('USER')")
                 .antMatchers("/select_topic").access("hasRole('USER')")
 
