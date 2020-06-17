@@ -40,4 +40,16 @@ public class TopicServiceImpl implements TopicService {
     public List<Topic> findTopics() {
         return topicRepository.findAll();
     }
+
+    @Override
+    public List<String> findAllTopicsNames() {
+        return topicRepository.findAllTopicsNames();
+    }
+
+    @Override
+    public Topic findByDescription(String description) {
+        return topicRepository.findByDescription(description)
+                .orElse(null);
+
+    }
 }
