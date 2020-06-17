@@ -7,6 +7,8 @@ import by.devincubator.services.user.interfaces.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class QuestionServiceImpl implements QuestionService {
     @Autowired
@@ -28,5 +30,16 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void delete(Question question) {
         questionRepository.delete(question);
+    }
+
+    @Override
+    public Question findByDescription(String description) {
+        return questionRepository.findQuestionByDescription(description)
+                .orElse(null);
+    }
+
+    @Override
+    public List<String> findAllQuestionDescriptions() {
+        return questionRepository.findAllQuestionDescriptions();
     }
 }
