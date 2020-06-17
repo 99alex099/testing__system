@@ -193,4 +193,15 @@ public class TestServiceImpl implements TestService {
 
         return null;
     }
+
+    @Override
+    public List<String> findAllTestNames() {
+        return testRepository.findAllTestNames();
+    }
+
+    @Override
+    public Test findTestByName(String description) {
+        return testRepository.findTestByName(description)
+                .orElse(null);
+    }
 }

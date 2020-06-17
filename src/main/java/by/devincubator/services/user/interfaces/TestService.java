@@ -21,4 +21,7 @@ public interface TestService {
     boolean questionHasAnswers(QuestionDTO questionDTO);
     List<ResultDTO> fillResultDTO(TestPassingDTO testPassingDTO);
     Statistic saveResults(TestPassingDTO testPassingDTO, String username);
+
+    List<String> findAllTestNames();
+    Test findTestByName(String description);
 }
