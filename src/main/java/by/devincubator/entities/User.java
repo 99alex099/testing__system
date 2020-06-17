@@ -27,10 +27,19 @@ public class User implements UserDetails {
     private String firstName;
     @Column(name = "lastName")
     private String lastName;
+    @Column(name = "patronymic")
+    private String patronymic;
     @Column(name = "login")
     private String login;
     @Column(name = "password")
     private String password;
+
+    @Column(name = "approved")
+    private boolean isApproved;
+
+    @Column (name = "email")
+    private String email;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="roles_of_users",
             joinColumns = @JoinColumn(name="userId"),
