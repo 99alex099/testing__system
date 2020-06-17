@@ -1,0 +1,320 @@
+    drop database testing_system;
+
+    CREATE SCHEMA `testing_system` DEFAULT CHARACTER SET utf8 ;
+
+    CREATE TABLE `testing_system`.`topics` (
+      `topicId` INT NOT NULL AUTO_INCREMENT,
+      `description` VARCHAR(256),
+      `name` VARCHAR(24) UNIQUE,
+      PRIMARY KEY (`topicId`));
+
+    CREATE TABLE `testing_system`.`tests` (
+      `testId` INT NOT NULL AUTO_INCREMENT,
+      `name` VARCHAR(24) UNIQUE,
+      `description` VARCHAR(256),
+      `topicId` INT NOT NULL,
+      PRIMARY KEY (`testId`),
+      INDEX `test_of_topic_idx` (`topicId` ASC) VISIBLE,
+      CONSTRAINT `test_of_topic`
+        FOREIGN KEY (`topicId`)
+        REFERENCES `testing_system`.`topics` (`topicId`)
+        ON DELETE RESTRICT
+        ON UPDATE RESTRICT);
+
+    CREATE TABLE `testing_system`.`questions` (
+      `questionId` INT NOT NULL AUTO_INCREMENT,
+      `description` VARCHAR(128) UNIQUE,
+      `testId` INT NOT NULL,
+      PRIMARY KEY (`questionId`),
+      INDEX `question_of_test_idx` (`testId` ASC) VISIBLE,
+      CONSTRAINT `question_of_test`
+        FOREIGN KEY (`testId`)
+        REFERENCES `testing_system`.`tests` (`testId`)
+        ON DELETE RESTRICT
+        ON UPDATE RESTRICT);
+
+    CREATE TABLE `testing_system`.`literature` (
+      `literatureId` INT NOT NULL AUTO_INCREMENT,
+      `description` VARCHAR(256) NOT NULL,
+      `questionId` INT NOT NULL,
+      PRIMARY KEY (`literatureId`),
+      INDEX `literature_for_question_idx` (`questionId` ASC) VISIBLE,
+      CONSTRAINT `literature_for_question`
+        FOREIGN KEY (`questionId`)
+        REFERENCES `testing_system`.`questions` (`questionId`)
+        ON DELETE RESTRICT
+        ON UPDATE RESTRICT);
+
+    CREATE TABLE `testing_system`.`links` (
+      `linkId` INT NOT NULL AUTO_INCREMENT,
+      `link` VARCHAR(128) NOT NULL,
+      `literatureId` INT NOT NULL,
+      PRIMARY KEY (`linkId`),
+      INDEX `link_of_literature_idx` (`literatureId` ASC) VISIBLE,
+      CONSTRAINT `link_of_literature`
+        FOREIGN KEY (`literatureId`)
+        REFERENCES `testing_system`.`literature` (`literatureId`)
+        ON DELETE RESTRICT
+        ON UPDATE RESTRICT);
+
+    CREATE TABLE `testing_system`.`answers` (
+      `answerId` INT NOT NULL AUTO_INCREMENT,
+      `description` VARCHAR(100) NOT NULL,
+      `correct` TINYINT(1) NOT NULL,
+      `questionId` INT NOT NULL,
+      PRIMARY KEY (`answerId`),
+      INDEX `answer_on_question_idx` (`questionId` ASC) VISIBLE,
+      CONSTRAINT `answer_on_question`
+        FOREIGN KEY (`questionId`)
+        REFERENCES `testing_system`.`questions` (`questionId`)
+        ON DELETE RESTRICT
+        ON UPDATE RESTRICT);
+
+    CREATE TABLE `testing_system`.`roles` (
+      `roleId` INT NOT NULL AUTO_INCREMENT,
+      `roleName` VARCHAR(45) NOT NULL,
+      PRIMARY KEY (`roleId`));
+
+    CREATE TABLE `testing_system`.`users` (
+      `userId` INT NOT NULL AUTO_INCREMENT,
+      `firstName` VARCHAR(255) NOT NULL,
+      `lastName` VARCHAR(255) NOT NULL,
+      `patronymic` VARCHAR(255) NOT NULL,
+      `login` VARCHAR(24) NOT NULL,
+      `password` VARCHAR(255) NOT NULL,
+      `approved` TINYINT(1) NOT NULL,
+      `email` VARCHAR(100),
+      PRIMARY KEY (`userId`),
+      UNIQUE (`login`));
+
+    CREATE TABLE `testing_system`.`statistics` (
+      `statisticId` INT NOT NULL AUTO_INCREMENT,
+      `date` DATE NOT NULL,
+      `correct` TINYINT(1) NOT NULL,
+      `questionId` INT NOT NULL,
+      `userId` INT NOT NULL,
+      PRIMARY KEY (`statisticId`),
+      INDEX `statistic_of_question_idx` (`questionId` ASC) VISIBLE,
+      INDEX `statistic_of_user_idx` (`userId` ASC) VISIBLE,
+      CONSTRAINT `statistic_of_question`
+        FOREIGN KEY (`questionId`)
+        REFERENCES `testing_system`.`questions` (`questionId`)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION,
+      CONSTRAINT `statistic_of_user`
+        FOREIGN KEY (`userId`)
+        REFERENCES `testing_system`.`users` (`userId`)
+        ON DELETE RESTRICT
+        ON UPDATE RESTRICT);
+
+    CREATE TABLE `testing_system`.`roles_of_users` (
+      `id` INT NOT NULL AUTO_INCREMENT,
+      `userId` INT NOT NULL,
+      `roleId` INT NOT NULL,
+      PRIMARY KEY (`id`),
+      INDEX `userId_idx` (`userId` ASC) VISIBLE,
+      INDEX `roleId_idx` (`roleId` ASC) VISIBLE,
+      CONSTRAINT `userId`
+        FOREIGN KEY (`userId`)
+        REFERENCES `testing_system`.`users` (`userId`)
+        ON DELETE RESTRICT
+        ON UPDATE RESTRICT,
+      CONSTRAINT `roleId`
+        FOREIGN KEY (`roleId`)
+        REFERENCES `testing_system`.`roles` (`roleId`)
+        ON DELETE RESTRICT
+        ON UPDATE RESTRICT,
+        UNIQUE (userId, roleId));
+
+
+
+    INSERT INTO testing_system.roles (roleName) VALUES ('ROLE_USER');
+    INSERT INTO testing_system.roles (roleName) VALUES ('ROLE_ADMIN');
+    INSERT INTO testing_system.roles (roleName) VALUES ('ROLE_TUTOR');
+
+    INSERT INTO testing_system.users (firstName, lastName, login, patronymic, password, approved, email) VALUES ('Tom', 'Tailor', 'tom', 'Arnoldovich', 'tomtom', '1', 'tt@gmail.com');
+    INSERT INTO testing_system.users (firstName, lastName, login, patronymic, password, approved, email) VALUES ('Jackie', 'Chan', 'jack', 'Leevich', 'jackjack', '1', 'jackchan@mail.com');
+    INSERT INTO testing_system.users (firstName, lastName, login, patronymic, password, approved, email) VALUES ('Pam', 'Anderson', '1pam', 'Jackovna', '1a', '1', 'pam@icloud.com');
+
+    INSERT INTO testing_system.topics (description, name) VALUES ('Темы, связанные с программированием', 'Программирование');
+    INSERT INTO testing_system.topics (description, name) VALUES ('Темы, связанные с математикой', 'Математика');
+
+    INSERT INTO testing_system.tests (name, description, topicId) VALUES ('Общее(прогр)', 'Проверочный тест по программированию', '1');
+    INSERT INTO testing_system.tests (name, description, topicId) VALUES ('Общее(мат)', 'Проверочный тест по математике', '2');
+
+    INSERT INTO testing_system.questions (description, testId) VALUES ('Выберите термин, который не относится к ООП', '1');
+    INSERT INTO testing_system.questions (description, testId) VALUES ('Интеграл - это', '2');
+    INSERT INTO testing_system.questions (description, testId) VALUES ('С какой версии Java появилось StreamAPI', '1');
+    INSERT INTO testing_system.questions (description, testId) VALUES ('Производная - это?', '2');
+    INSERT INTO testing_system.questions (description, testId) VALUES ('Биссектриса угла - это', '2');
+    INSERT INTO testing_system.questions (description, testId) VALUES ('Создатель Java', '1');
+    INSERT INTO testing_system.questions (description, testId) VALUES ('Когда создана Java', '1');
+    INSERT INTO testing_system.questions (description, testId) VALUES ('Какой модификатор доступа Java ограничивает видимость полей, методов внутри класса?', '1');
+    INSERT INTO testing_system.questions (description, testId) VALUES ('Ряд - это?', '2');
+    INSERT INTO testing_system.questions (description, testId) VALUES ('Алгоритм - это?', '1');
+
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('Класс', '0', '1');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('Инкапсуляция', '0', '1');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('Запрос', '1', '1');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('Метод', '0', '1');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('Производная от производной', '0', '2');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('Дифференциал функции', '0', '2');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('Обратная производной', '1', '2');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('Производная от предела функции', '0', '2');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('5', '0', '3');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('8', '1', '3');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('С самого начала появления Java', '0', '3');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('10', '0', '3');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('lim ( (f(x+dx) - f(x))/dx) при dx->0', '1', '4');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('Обратная функция дифференциала', '0', '4');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('Интеграл функции', '0', '4');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('lim (f(x+dx)) при dx -> 0', '0', '4');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('отрезок, равный другому отрезку, с которым он пересекается', '0', '5');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('отрезок, соед вершину треугольника с серединой противоположной стороны', '0', '5');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('отрезок, составляющий прямой угол с пересекающейся линией', '0', '5');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('отрезок, делящий угол пополам', '1', '5');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('Джавид Карим', '0', '6');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('Джеймс Гослинг', '1', '6');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('Гвидо Ван Россум', '0', '6');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('Дональд Трамп', '0', '6');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('1995', '1', '7');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('2018', '0', '7');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('1999', '0', '7');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('2004', '0', '7');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('public', '0', '8');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('default', '0', '8');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('protected', '0', '8');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('private', '1', '8');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('производная функции', '0', '9');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('интеграл функции', '0', '9');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('выражение типа u1+u2+...un+...=sum(un)', '1', '9');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('дифференциал функции', '0', '9');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('фреймворк Java', '0', '10');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('код программы', '0', '10');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('парадигма программирования', '0', '10');
+    INSERT INTO testing_system.answers (description, correct, questionId) VALUES ('последовательность инструкций', '1', '10');
+
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '1', '1', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '1', '3', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '1', '6', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '0', '7', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '1', '8', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '0', '10', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '1', '1', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '0', '3', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '1', '6', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '1', '7', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '1', '8', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '1', '10', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '1', '2', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '1', '4', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '1', '5', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '1', '9', '1');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '0', '1', '2');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '0', '3', '2');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '1', '6', '2');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '0', '7', '2');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '1', '8', '2');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-09-22', '0', '10', '2');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '0', '2', '2');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '0', '4', '2');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '0', '5', '2');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '1', '9', '2');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '1', '2', '2');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '0', '4', '2');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '1', '5', '2');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '1', '9', '2');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '0', '2', '3');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '1', '4', '3');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '1', '5', '3');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '1', '9', '3');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '1', '2', '3');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '1', '4', '3');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '1', '5', '3');
+    INSERT INTO testing_system.statistics (date, correct, questionId, userId) VALUES ('2019-11-05', '1', '9', '3');
+
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('ООП1', '1');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('ООП2', '1');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('ООП3', '1');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('ООП4', '1');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Интеграл1', '2');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Интеграл2', '2');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Интеграл3', '2');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Интеграл4', '2');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Java8-1', '3');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Java8-2', '3');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Java8-3', '3');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Java8-4', '3');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('произв-1', '4');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('произв-2', '4');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('произв-3', '4');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('произв-4', '4');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('бисс-1', '5');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('бисс-2', '5');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('ьисс-3', '5');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('бисс-4', '5');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Creator-1', '6');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Creator2', '6');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Creator3', '6');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Creator4', '6');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Date1', '7');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Date2', '7');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Date3', '7');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('Date4', '7');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('мод1', '8');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('мод2', '8');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('мод3', '8');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('мод4', '8');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('ряд1', '9');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('ряд2', '9');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('ряд3', '9');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('ряд4', '9');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('алг1', '10');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('алг2', '10');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('алг3', '10');
+    INSERT INTO testing_system.literature (description, questionId) VALUES ('алг4', '10');
+
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '1');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com 2', '2');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com 3', '3');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com 4', '4');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '5');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com 2', '6');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com 3', '7');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com 4', '8');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '9');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '10');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '11');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '12');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '13');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '14');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '15');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '16');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '17');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '18');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '19');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '20');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '21');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '22');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '23');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '24');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '25');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '26');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '27');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '28');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '29');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '30');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '31');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '32');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '33');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '34');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '35');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '36');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '37');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '38');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '39');
+    INSERT INTO testing_system.links (link, literatureId) VALUES ('google.com', '40');
+
+    INSERT INTO testing_system.roles_of_users (userId, roleId) VALUES ('1', '2');
+    INSERT INTO testing_system.roles_of_users (userId, roleId) VALUES ('2', '3');
+    INSERT INTO testing_system.roles_of_users (userId, roleId) VALUES ('3', '1');
