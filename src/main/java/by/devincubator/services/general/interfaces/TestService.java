@@ -14,7 +14,6 @@ public interface TestService {
     List<Question> formQuestionsByTest(Test test);
     Test findByTopicAndTestName(Topic topic, String name);
     List<String> answersToString(Question question);
-    List<Answer> findAnswersById(List<Integer> answersId);
 
     List<String> findAllTestNames();
     Test findTestByName(String description);

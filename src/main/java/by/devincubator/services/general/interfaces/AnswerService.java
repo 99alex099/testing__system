@@ -11,4 +11,5 @@ public interface AnswerService {
     void delete(Answer answer);
     List<Answer> findCorrectAnswers(Question question);
     boolean answersIsEquals(List<Answer> userAnswers, List<Answer> correctAnswers);
+    List<Answer> findAnswersById(List<Integer> answersId);
 }

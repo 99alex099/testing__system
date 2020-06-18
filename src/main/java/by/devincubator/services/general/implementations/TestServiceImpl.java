@@ -81,15 +81,6 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public List<Answer> findAnswersById(List<Integer> answersId) {
-        return answersId.stream()
-                .map(id -> answerRepository.findById(id)
-                        .orElseThrow(() -> new AnswerIdIsIncorrectException(id)))
-                .collect(Collectors.toList());
-    }
-
-
-    @Override
     public List<String> findAllTestNames() {
         return testRepository.findAllTestNames();
     }

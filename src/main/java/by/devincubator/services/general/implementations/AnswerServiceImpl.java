@@ -44,4 +44,11 @@ public class AnswerServiceImpl implements AnswerService {
     public boolean answersIsEquals(List<Answer> userAnswers, List<Answer> correctAnswers) {
         return userAnswers.equals(correctAnswers);
     }
+    @Override
+    public List<Answer> findAnswersById(List<Integer> answersId) {
+        return answersId.stream()
+                .map(id -> answerRepository.findById(id)
+                        .orElseThrow(() -> new AnswerIdIsIncorrectException(id)))
+                .collect(Collectors.toList());
+    }
 }
