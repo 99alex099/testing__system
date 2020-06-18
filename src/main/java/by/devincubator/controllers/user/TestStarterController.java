@@ -33,9 +33,7 @@ public class TestStarterController {
 
     @GetMapping("/choose_topic")
     public String chooseTopic(Model model) {
-        List<String> tops = new LinkedList<>();
         model.addAttribute("topics", topicService.findTopics());
-        System.out.println(topicService.findTopics());
         return "user/choose_topic";
     }
 
