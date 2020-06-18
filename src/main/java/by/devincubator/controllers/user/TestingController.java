@@ -2,9 +2,10 @@ package by.devincubator.controllers.user;
 
 import by.devincubator.entities.Answer;
 import by.devincubator.entities.Question;
-import by.devincubator.services.user.dto.TestPassingDTO;
-import by.devincubator.services.user.dto.UserAnswersDTO;
-import by.devincubator.services.user.interfaces.TestService;
+import by.devincubator.services.general.dto.TestPassingDTO;
+import by.devincubator.services.general.dto.UserAnswersDTO;
+import by.devincubator.services.general.interfaces.TestService;
+import by.devincubator.services.user.interfaces.TestingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +25,8 @@ public class TestingController {
 
     @Autowired
     private TestService testService;
+    @Autowired
+    private TestingService testingService;
 
     @GetMapping
     public String formQuestion(Model model,
@@ -56,14 +59,14 @@ public class TestingController {
                 testPassing.getSelectedQuestion()
         ).setUserAnswers(answers);
 
-        if (testService.testHasQuestionWithoutAnswer(testPassing)) {
+        if (testingService.testHasQuestionWithoutAnswer(testPassing)) {
             return formNextQuestion(testPassing);
         } else {
 
             sessionStatus.setComplete();
-            model.addAttribute("results", testService.fillResultDTO(testPassing));
+            model.addAttribute("results", testingService.fillResultDTO(testPassing));
 
-            testService.saveResults(testPassing, getPrincipal());
+            testingService.saveResults(testPassing, getPrincipal());
 
             return "user/resultPage";
         }
@@ -71,13 +74,13 @@ public class TestingController {
 
     @GetMapping("/previous_question")
     public String formPreviousQuestion(@ModelAttribute(name = "testPassing") TestPassingDTO testPassing) {
-        testService.previousQuestion(testPassing);
+        testingService.previousQuestion(testPassing);
         return "redirect:/testing";
     }
 
     @GetMapping("/next_question")
     public String formNextQuestion(@ModelAttribute(name = "testPassing") TestPassingDTO testPassing) {
-        testService.nextQuestion(testPassing);
+        testingService.nextQuestion(testPassing);
         return "redirect:/testing";
     }
 

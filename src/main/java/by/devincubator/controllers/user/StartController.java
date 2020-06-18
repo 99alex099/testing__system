@@ -1,6 +1,6 @@
 package by.devincubator.controllers.user;
 
-import by.devincubator.services.user.interfaces.UserService;
+import by.devincubator.services.general.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

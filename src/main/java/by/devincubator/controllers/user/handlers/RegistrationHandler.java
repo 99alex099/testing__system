@@ -1,7 +1,6 @@
 package by.devincubator.controllers.user.handlers;
 
-import by.devincubator.entities.User;
-import by.devincubator.services.user.exceptions.UserNameExistsException;
+import by.devincubator.services.general.exceptions.UserNameExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

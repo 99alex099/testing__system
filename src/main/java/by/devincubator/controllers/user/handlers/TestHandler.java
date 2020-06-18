@@ -1,6 +1,6 @@
 package by.devincubator.controllers.user.handlers;
 
-import by.devincubator.services.user.exceptions.TestNotFoundedException;
+import by.devincubator.services.general.exceptions.TestNotFoundedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -2,8 +2,8 @@ package by.devincubator.controllers.admin;
 
 import by.devincubator.entities.Role;
 import by.devincubator.services.admin.admindto.UserDTO;
-import by.devincubator.services.user.interfaces.RoleService;
-import by.devincubator.services.user.interfaces.UserService;
+import by.devincubator.services.general.interfaces.RoleService;
+import by.devincubator.services.general.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

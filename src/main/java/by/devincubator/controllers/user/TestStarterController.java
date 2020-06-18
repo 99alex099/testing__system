@@ -2,10 +2,11 @@ package by.devincubator.controllers.user;
 
 import by.devincubator.entities.Test;
 import by.devincubator.entities.Topic;
-import by.devincubator.services.user.dto.TestPassingDTO;
-import by.devincubator.services.user.dto.UserAnswersDTO;
-import by.devincubator.services.user.interfaces.TestService;
-import by.devincubator.services.user.interfaces.TopicService;
+import by.devincubator.services.general.dto.TestPassingDTO;
+import by.devincubator.services.general.dto.UserAnswersDTO;
+import by.devincubator.services.general.interfaces.TestService;
+import by.devincubator.services.general.interfaces.TopicService;
+import by.devincubator.services.user.interfaces.TestingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

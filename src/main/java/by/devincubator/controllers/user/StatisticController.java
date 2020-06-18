@@ -1,6 +1,6 @@
 package by.devincubator.controllers.user;
 
-import by.devincubator.services.user.interfaces.StatisticService;
+import by.devincubator.services.general.interfaces.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
