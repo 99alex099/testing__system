@@ -4,6 +4,7 @@ import by.devincubator.entities.Answer;
 import by.devincubator.entities.Question;
 import by.devincubator.services.general.dto.TestPassingDTO;
 import by.devincubator.services.general.dto.UserAnswersDTO;
+import by.devincubator.services.general.interfaces.AnswerService;
 import by.devincubator.services.general.interfaces.TestService;
 import by.devincubator.services.user.interfaces.TestingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class TestingController {
     private TestService testService;
     @Autowired
     private TestingService testingService;
+    @Autowired
+    private AnswerService answerService;
 
     @GetMapping
     public String formQuestion(Model model,
@@ -53,7 +56,7 @@ public class TestingController {
                               @RequestParam("userAnswersIds") List<Integer> userAnswersIds,
                               SessionStatus sessionStatus) {
 
-        List<Answer> answers = testService.findAnswersById(userAnswersIds);
+        List<Answer> answers = answerService.findAnswersById(userAnswersIds);
 
         testPassing.getQuestionsDTO().get(
                 testPassing.getSelectedQuestion()
