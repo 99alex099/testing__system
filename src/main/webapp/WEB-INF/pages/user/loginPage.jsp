@@ -10,7 +10,7 @@
 <form action="/login" method="post">
 
     <div class="mycont">
-        <div class="margin-top2">
+        <div class="margin-top8">
             <div>
                 <input type="text" class="css-input" id="username" name="ssoId" placeholder="Логин" value="" required>
             </div>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="mycont">
-        <div class="margin-top8">
+        <div class="margin-top2">
             <input type="submit" class="myButton" value="Войти">
         </div>
     </div>
