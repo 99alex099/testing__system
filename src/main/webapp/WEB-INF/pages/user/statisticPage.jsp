@@ -5,12 +5,13 @@
 <head>
     <title>Личная статистика</title>
     <link href="resources/css/myTable.css" rel="stylesheet"/>
+    <link href="resources/css/myLink.css" rel="stylesheet"/>
     <link href="resources/css/answersPercentFont.css" rel="stylesheet"/>
     <link href="resources/css/statisticQuestionFont.css" rel="stylesheet"/>
 </head>
 <body>
 
-<table class="blueTable">
+<table class="blueTable" align="center">
     <thead>
     <tr>
         <th> Тема </th>
@@ -46,5 +47,8 @@
     </tbody>
     </tr>
 </table>
+<div class="mycont">
+    <a href="/profile" class="myLink">Вернуться в профиль</a>
+</div>
 </body>
 </html>

@@ -9,10 +9,12 @@
     <link href="resources/css/statisticQuestionFont.css" rel="stylesheet"/>
     <link href="resources/css/correctAnswerFont.css" rel="stylesheet"/>
     <link href="resources/css/incorrectAnswerFont.css" rel="stylesheet"/>
+    <link href="resources/css/mycont.css" rel="stylesheet"/>
+    <link href="resources/css/myLink.css" rel="stylesheet"/>
 </head>
 <body>
 
-<table class="blueTable">
+<table class="blueTable" align="center">
     <thead>
     <tr>
         <th> Вопрос </th>
@@ -41,5 +43,10 @@
     </c:forEach>
     </tbody>
 </table>
+<div class="margin-top8">
+    <div class="mycont">
+        <a href="/profile" class="myLink">Вернуться в профиль</a>
+    </div>
+</div>
 </body>
 </html>
