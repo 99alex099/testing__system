@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class LiteratureServiceImpl implements LiteratureService {
 
+    private static final String START_LINK_LITERATURE_INFO = "/literature/";
+
     @Autowired
     private LiteratureRepository literatureRepository;
 
@@ -29,5 +31,10 @@ public class LiteratureServiceImpl implements LiteratureService {
     @Override
     public void delete(Literature literature) {
         literatureRepository.delete(literature);
+    }
+
+    @Override
+    public String formLinkToLiteratureInfo(Literature literature) {
+        return START_LINK_LITERATURE_INFO + literature.getLiteratureId();
     }
 }

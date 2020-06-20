@@ -1,15 +1,18 @@
 package by.devincubator.dits.services.user.implementations;
 
 import by.devincubator.dits.entities.Answer;
+import by.devincubator.dits.entities.Literature;
 import by.devincubator.dits.entities.Question;
 import by.devincubator.dits.entities.Statistic;
 import by.devincubator.dits.repository.LiteratureRepository;
 import by.devincubator.dits.repository.StatisticRepository;
+import by.devincubator.dits.services.general.dto.LiteratureDTO;
 import by.devincubator.dits.services.general.dto.QuestionDTO;
 import by.devincubator.dits.services.general.dto.ResultDTO;
 import by.devincubator.dits.services.general.exceptions.TestNotHavingQuestions;
 import by.devincubator.dits.services.general.interfaces.AnswerService;
 import by.devincubator.dits.services.general.dto.TestPassingDTO;
+import by.devincubator.dits.services.general.interfaces.LiteratureService;
 import by.devincubator.dits.services.general.interfaces.UserService;
 import by.devincubator.dits.services.user.interfaces.TestingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TestingServiceImpl implements TestingService {
@@ -31,6 +35,8 @@ public class TestingServiceImpl implements TestingService {
     private UserService userService;
     @Autowired
     private StatisticRepository statisticRepository;
+    @Autowired
+    private LiteratureService literatureService;
 
     @Override
     public boolean testHasQuestionWithoutAnswer(TestPassingDTO testPassingDTO) {
@@ -59,10 +65,10 @@ public class TestingServiceImpl implements TestingService {
             List<Answer> correctAnswers = answerService.findCorrectAnswers(question);
             resultDTOList.add(
                     new ResultDTO(question.getDescription(),
-                            answerService.answersIsEquals(
+                            answerService.answersAreEquals(
                                     questionDTO.getUserAnswers(), correctAnswers
                             ),
-                            literatureRepository.findByQuestion(question).toString())
+                            formLiteratureDTOByQuestion(question))
             );
         }
 
@@ -82,7 +88,7 @@ public class TestingServiceImpl implements TestingService {
             Statistic statistic = Statistic.builder()
                     .user(userService.findByLogin(username))
                     .question(question)
-                    .isCorrect(answerService.answersIsEquals(
+                    .isCorrect(answerService.answersAreEquals(
                             questionDTO.getUserAnswers(), correctAnswers
                     ))
                     .build();
@@ -90,6 +96,20 @@ public class TestingServiceImpl implements TestingService {
             statisticRepository.save(statistic);
         }
     }
+
+    @Override
+    public List<LiteratureDTO> formLiteratureDTOByQuestion(Question question) {
+
+        List<Literature> literatureList = literatureRepository.findByQuestion(question);
+
+        return literatureList.stream()
+                .map(literature -> new LiteratureDTO(
+                        literature.getDescription(),
+                        literatureService.formLinkToLiteratureInfo(literature)
+                ))
+                .collect(Collectors.toList());
+    }
+
     @Override
     public void nextQuestion(TestPassingDTO testPassingDTO) {
 

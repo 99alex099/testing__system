@@ -7,4 +7,5 @@ public interface LiteratureService {
     Literature findById(Integer id);
     Literature save(Literature literature);
     void delete(Literature literature);
+    String formLinkToLiteratureInfo(Literature literature);
 }

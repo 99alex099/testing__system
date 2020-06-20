@@ -4,13 +4,13 @@
 <html>
 <head>
     <title>Результаты</title>
-    <link href="resources/css/myTable.css" rel="stylesheet"/>
-    <link href="resources/css/answerStatisticFont.css" rel="stylesheet"/>
-    <link href="resources/css/statisticQuestionFont.css" rel="stylesheet"/>
-    <link href="resources/css/correctAnswerFont.css" rel="stylesheet"/>
-    <link href="resources/css/incorrectAnswerFont.css" rel="stylesheet"/>
-    <link href="resources/css/mycont.css" rel="stylesheet"/>
-    <link href="resources/css/myLink.css" rel="stylesheet"/>
+    <link href="/resources/css/myTable.css" rel="stylesheet"/>
+    <link href="/resources/css/answerStatisticFont.css" rel="stylesheet"/>
+    <link href="/resources/css/statisticQuestionFont.css" rel="stylesheet"/>
+    <link href="/resources/css/correctAnswerFont.css" rel="stylesheet"/>
+    <link href="/resources/css/incorrectAnswerFont.css" rel="stylesheet"/>
+    <link href="/resources/css/mycont.css" rel="stylesheet"/>
+    <link href="/resources/css/myLink.css" rel="stylesheet"/>
 </head>
 <body>
 
@@ -38,7 +38,15 @@
                     </div>
                 </c:if>
             </span></td>
-            <td><span> <div id="statisticQuestionFont">"${result.literatureInfo}" </div></span></td>
+            <td><span>
+                    <c:forEach var="literature" items="${result.literatureDTO}">
+                        <div>
+                            <a href="${literature.linkToLiteratureInfo}" class="myLink">
+                                ${literature.description}
+                            </a>
+                        </div>
+                    </c:forEach>
+            </span></td>
         </tr>
     </c:forEach>
     </tbody>

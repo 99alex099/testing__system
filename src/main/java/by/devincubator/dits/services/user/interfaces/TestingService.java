@@ -1,5 +1,8 @@
 package by.devincubator.dits.services.user.interfaces;
 
+import by.devincubator.dits.entities.Literature;
+import by.devincubator.dits.entities.Question;
+import by.devincubator.dits.services.general.dto.LiteratureDTO;
 import by.devincubator.dits.services.general.dto.QuestionDTO;
 import by.devincubator.dits.services.general.dto.ResultDTO;
 import by.devincubator.dits.services.general.dto.TestPassingDTO;
@@ -13,4 +16,5 @@ public interface TestingService {
     boolean questionHasAnswers(QuestionDTO questionDTO);
     List<ResultDTO> fillResultDTO(TestPassingDTO testPassingDTO);
     void saveResults(TestPassingDTO testPassingDTO, String username);
+    List<LiteratureDTO> formLiteratureDTOByQuestion(Question question);
 }
