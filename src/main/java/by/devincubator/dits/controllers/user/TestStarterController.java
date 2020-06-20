@@ -28,7 +28,8 @@ public class TestStarterController {
     private TestService testService;
 
     @GetMapping("/choose_topic")
-    public String chooseTopic(Model model) {
+    public String chooseTopic(Model model, SessionStatus sessionStatus) {
+        sessionStatus.setComplete();
         model.addAttribute("topics", topicService.findTopics());
         return "user/choose_topic";
     }
@@ -41,7 +42,6 @@ public class TestStarterController {
 
     @GetMapping(value = "/choose_test")
     public String chooseTest(Model model, Topic topic) {
-        System.out.println(topic.getTests());
         if (topic.getName() != null) {
             model.addAttribute("tests", topic.getTests());
             return "user/chooseTestPage";

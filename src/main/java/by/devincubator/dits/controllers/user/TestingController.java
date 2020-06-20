@@ -21,11 +21,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/testing")
 @SessionAttributes(types = {TestPassingDTO.class, UserAnswersDTO.class},
-        value = {"selectedAnswers"})
+        value = {"selectedAnswers", "results"})
 public class TestingController {
 
-    @Autowired
-    private TestService testService;
     @Autowired
     private TestingService testingService;
     @Autowired
@@ -66,13 +64,18 @@ public class TestingController {
             return formNextQuestion(testPassing);
         } else {
 
-            sessionStatus.setComplete();
+            //sessionStatus.setComplete();
             model.addAttribute("results", testingService.fillResultDTO(testPassing));
-
             testingService.saveResults(testPassing, getPrincipal());
 
-            return "user/resultPage";
+            return "redirect:/testing/result";
         }
+    }
+
+    @GetMapping("/result")
+    public String formResultPage(Model model,
+                                 @ModelAttribute(name = "testPassing") TestPassingDTO testPassing) {
+        return "user/resultPage";
     }
 
     @GetMapping("/previous_question")
