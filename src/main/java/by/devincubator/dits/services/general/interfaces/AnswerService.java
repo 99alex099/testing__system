@@ -10,6 +10,6 @@ public interface AnswerService {
     Answer save(Answer answer);
     void delete(Answer answer);
     List<Answer> findCorrectAnswers(Question question);
-    boolean answersIsEquals(List<Answer> userAnswers, List<Answer> correctAnswers);
+    boolean answersAreEquals(List<Answer> userAnswers, List<Answer> correctAnswers);
     List<Answer> findAnswersById(List<Integer> answersId);
 }

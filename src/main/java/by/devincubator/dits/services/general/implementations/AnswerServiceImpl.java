@@ -41,7 +41,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public boolean answersIsEquals(List<Answer> userAnswers, List<Answer> correctAnswers) {
+    public boolean answersAreEquals(List<Answer> userAnswers, List<Answer> correctAnswers) {
         return userAnswers.equals(correctAnswers);
     }
     @Override
