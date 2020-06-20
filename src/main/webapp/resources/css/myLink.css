@@ -2,3 +2,8 @@
 a.myLink:link{text-decoration:underline; color:#2a5db0;font-size: 20px;}
 a.myLink:visited{text-decoration:underline; color:#2a5db0;font-size: 20px;}
 a.myLink:hover{text-decoration:underline; color:#548dd4;font-size: 20px;}
+
+
+a.myLinkNormal:link{text-decoration:none; color:#2a5db0;font-size: 20px;}
+a.myLinkNormal:visited{text-decoration:none; color:#2a5db0;font-size: 20px;}
+a.myLinkNormal:hover{text-decoration:none; color:#548dd4;font-size: 20px;}
