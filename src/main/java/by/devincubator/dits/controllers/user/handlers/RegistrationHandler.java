@@ -17,7 +17,7 @@ public class RegistrationHandler {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("username", e.getUsername());
-        modelAndView.setViewName("incorrectUsernamePage");
+        modelAndView.setViewName("user/incorrectUsernamePage");
 
         return modelAndView;
     }
