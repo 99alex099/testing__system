@@ -1,5 +1,7 @@
 package by.devincubator.dits.services.general.implementations;
 
+import by.devincubator.dits.entities.RolesEnum;
+import by.devincubator.dits.services.general.dto.UserInfoDTO;
 import by.devincubator.dits.services.general.exceptions.*;
 import by.devincubator.dits.repository.RoleRepository;
 import by.devincubator.dits.repository.UserRepository;
@@ -18,10 +20,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserDetailsService, UserService {
 
+    private static final UserInfoDTO GUEST = new UserInfoDTO("guest", new LinkedList<>());
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -72,6 +77,26 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public void deleteUser(User user) {
         userRepository.delete(user);
+    }
+
+    @Override
+    public UserInfoDTO formUserInfoByUsername(String username) {
+
+        Optional<User> userOptional = userRepository.findByLogin(username);
+
+        return userOptional.map(user -> new UserInfoDTO(username,
+                user.getRoleList().stream()
+                        .map(role -> RolesEnum.valueOf(role.getRoleName()))
+                        .collect(Collectors.toList()))).orElseGet(this::formGuestUserDTO);
+    }
+
+    @Override
+    public UserInfoDTO formGuestUserDTO() {
+        return GUEST;
+    }
+
+    private UserDTO formGuestInfo() {
+        return null;
     }
 
     @Override

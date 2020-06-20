@@ -2,6 +2,7 @@ package by.devincubator.dits.services.general.interfaces;
 
 import by.devincubator.dits.entities.User;
 import by.devincubator.dits.services.admin.admindto.UserDTO;
+import by.devincubator.dits.services.general.dto.UserInfoDTO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,4 +14,6 @@ public interface UserService {
     User saveUserDTO(UserDTO userDTO);
     User registrationUser(User user);
     void deleteUser(User user);
+    UserInfoDTO formUserInfoByUsername(String username);
+    UserInfoDTO formGuestUserDTO();
 }

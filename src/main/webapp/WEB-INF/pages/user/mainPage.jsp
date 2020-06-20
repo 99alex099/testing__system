@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=utf-8" %>
 <html>
 <head>
@@ -11,8 +12,21 @@
 
         <a href="/login" class="myButton">Авторизоваться</a>
         <a href="/registration" class="myButton">Зарегистрироваться</a>
-        <a href="/profile" class="myButton">Профиль</a>
-
+        <c:if test="${user.user}">
+            <div class="margin-top2">
+                <a href="/profile" class="myButton">Профиль</a>
+            </div>
+        </c:if>
+        <c:if test="${user.admin}">
+            <div class="margin-top2">
+                <a href="/adminPanel" class="myButton">Администрирование</a>
+            </div>
+        </c:if>
+        <c:if test="${user.tutor}">
+            <div class="margin-top2">
+                <a href="/tutorCabinet" class="myButton">Кабинет учителя</a>
+            </div>
+        </c:if>
     </div>
 </div>
 </body>

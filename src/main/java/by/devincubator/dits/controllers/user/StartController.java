@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -20,30 +21,18 @@ public class StartController {
     @Autowired
     private UserService userService;
 
-    private static int counter = 0;
-
     @GetMapping
-    public String mainPage() {
+    public String mainPage(Model model) {
+        model.addAttribute("user",
+                isAuthenticated() ?
+                        userService.formUserInfoByUsername(getPrincipal()) :
+                        userService.formGuestUserDTO());
         return "user/mainPage";
     }
 
     @GetMapping("/not_access")
     public String access() {
         return "user/pageNotAccess";
-    }
-
-
-    @GetMapping(value = "/richest_user")
-    public String tmpPage(ModelMap model) {
-        model.addAttribute("temp", userService.findByLogin("alex099").getFirstName());
-        System.out.println("");
-        return "user/richest_user";
-    }
-
-    @GetMapping(value = "/admin")
-    public String adminPage(ModelMap model) {
-        model.addAttribute("user", getPrincipal());
-        return "user/admin";
     }
 
     @GetMapping(value = "/user")
@@ -63,6 +52,10 @@ public class StartController {
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);}
         return "redirect:/login?logout";
+    }
+
+    private static boolean isAuthenticated() {
+        return SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
     }
 
     private static String getPrincipal() {
