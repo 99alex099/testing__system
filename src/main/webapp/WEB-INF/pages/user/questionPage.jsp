@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>Тестирование</title>
+    <link href="resources/css/chooseAnsFont.css" rel="stylesheet" />
     <link href="resources/css/questionFont.css" rel="stylesheet" />
     <link href="resources/css/myButton.css" rel="stylesheet" />
     <link href="resources/css/myLink.css" rel="stylesheet" />
@@ -27,24 +28,53 @@
                         <div id="questionFont">
                             ${question}
                         </div>
+                        <div class="margin-top2">
+                            <div id="chooseAnsFont">
+                                Выберите верные ответы:
+                            </div>
+                        </div>
                         <form class = "ui form" action="/testing" method="post">
 
-                            <ul>
-                                <c:forEach var="answer" items="${selectableAnswers}" >
-                                    <li>
-                                        <div>
-                                            <input type="checkbox" value="${answer.answerId}"
-                                                   id="${answer.answerId}" name="userAnswersIds">
-                                            <label for="${answer.answerId}">
-                                                <span></span>
-                                                    ${answer.description}
-                                            </label>
+
+                            <div class="container-fluid">
+                                <div class="container">
+                                    <div class="row">
+
+                                        <div class="col-3"></div>
+                                        <div class="col">
+                                            <ul>
+                                                <c:forEach var="answer" items="${selectableAnswers}" >
+                                                    <li>
+                                                        <div>
+                                                            <input type="checkbox" value="${answer.answerId}"
+                                                                   id="${answer.answerId}" name="userAnswersIds">
+                                                            <label for="${answer.answerId}">
+                                                                <span></span>
+                                                                    ${answer.description}
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
                                         </div>
-                                    </li>
-                                </c:forEach>
-                            </ul>
-                            <div class="field">
-                                <button class="myButton" type="submit">Ответить</button>
+                                        <div class="col-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <a href="/testing/previous_question" class="myLinkNormal">Предыдущий вопрос</a>
+                                        </div>
+                                        <div class="col">
+                                            <button class="myButton" type="submit">Ответить</button>
+                                        </div>
+                                        <div class="col">
+                                            <a href="/testing/next_question" class="myLinkNormal">Следующий вопрос</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -52,12 +82,6 @@
             </div>
         </div>
     </div>
-</div>
-<div>
-    <a href="/testing/next_question" class="myLink">Следующий вопрос</a>
-</div>
-<div>
-    <a href="/testing/previous_question" class="myLink">Предыдущий вопрос</a>
 </div>
 
 </body>
