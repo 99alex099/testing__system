@@ -49,10 +49,9 @@ public class TestingController {
 
     @PostMapping
     @Transactional
-    public String checkAnswer(Model model,
-                              @ModelAttribute(name = "testPassing") TestPassingDTO testPassing,
-                              @RequestParam("userAnswersIds") List<Integer> userAnswersIds,
-                              SessionStatus sessionStatus) {
+    public String saveUserAnswers(Model model,
+                                  @ModelAttribute(name = "testPassing") TestPassingDTO testPassing,
+                                  @RequestParam("userAnswersIds") List<Integer> userAnswersIds) {
 
         List<Answer> answers = answerService.findAnswersById(userAnswersIds);
 
@@ -65,7 +64,8 @@ public class TestingController {
         } else {
 
             //sessionStatus.setComplete();
-            model.addAttribute("results", testingService.fillResultDTO(testPassing));
+            //model.addAttribute("results", testingService.fillResultDTO(testPassing));
+            model.addAttribute("result", testingService.fillResultDTO(testPassing));
             testingService.saveResults(testPassing, getPrincipal());
 
             return "redirect:/testing/result";
@@ -75,6 +75,8 @@ public class TestingController {
     @GetMapping("/result")
     public String formResultPage(Model model,
                                  @ModelAttribute(name = "testPassing") TestPassingDTO testPassing) {
+        System.out.println(testingService.fillResultDTO(testPassing));
+        model.addAttribute("result", testingService.fillResultDTO(testPassing));
         return "user/resultPage";
     }
 

@@ -26,7 +26,10 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserDetailsService, UserService {
 
-    private static final UserInfoDTO GUEST = new UserInfoDTO("guest", new LinkedList<>());
+    private static final boolean IS_NOT_AUTHORISED = false;
+    private static final UserInfoDTO GUEST = new UserInfoDTO("guest", new LinkedList<>(),
+            IS_NOT_AUTHORISED);
+    private static final boolean IS_AUTHORISED = true;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -87,7 +90,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userOptional.map(user -> new UserInfoDTO(username,
                 user.getRoleList().stream()
                         .map(role -> RolesEnum.valueOf(role.getRoleName()))
-                        .collect(Collectors.toList()))).orElseGet(this::formGuestUserDTO);
+                        .collect(Collectors.toList()),
+                IS_AUTHORISED)).orElseGet(this::formGuestUserDTO);
     }
 
     @Override

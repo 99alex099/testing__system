@@ -28,7 +28,7 @@
                             <a href="/choose_topic" class="myLink">Выбор темы и теста</a>
                         </div>
                         <div>
-                            <a href="/logout" class="myLink">Выйти из аккаунта</a>
+                            <a href="/" class="myLink">Главное меню</a>
                         </div>
                     </div>
                 </div>

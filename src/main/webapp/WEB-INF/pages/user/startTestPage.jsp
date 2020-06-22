@@ -28,6 +28,9 @@
                         <div>
                             <a href="/testing" class="myLink">Пройти тестирование</a>
                         </div>
+                        <div class="margin-top4">
+                            <a href="/choose_test" class="myLink">Выбрать другой тест</a>
+                        </div>
                     </div>
                 </div>
             </div>

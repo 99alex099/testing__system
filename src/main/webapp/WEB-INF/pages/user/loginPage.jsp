@@ -5,6 +5,7 @@
     <link href="resources/css/myButton.css" rel="stylesheet"/>
     <link href="resources/css/mycont.css" rel="stylesheet"/>
     <link href="resources/css/myInput.css" rel="stylesheet"/>
+    <link href="resources/css/myLink.css" rel="stylesheet"/>
 </head>
 <body>
 <form action="/login" method="post">
@@ -24,6 +25,12 @@
     <div class="mycont">
         <div class="margin-top2">
             <input type="submit" class="myButton" value="Войти">
+        </div>
+    </div>
+
+    <div class="mycont">
+        <div class="margin-top4">
+            <a href="/" class="myLink">Главная страница</a>
         </div>
     </div>
 </form>

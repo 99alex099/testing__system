@@ -3,15 +3,14 @@
 <head>
     <title>Регистрация</title>
 
-    <link href="resources/css/myButton.css" rel="stylesheet"/>
-    <link href="resources/css/mycont.css" rel="stylesheet"/>
-    <link href="resources/css/myLink.css" rel="stylesheet"/>
-    <link href="resources/css/myInput.css" rel="stylesheet"/>
+    <link href="/resources/css/myButton.css" rel="stylesheet"/>
+    <link href="/resources/css/mycont.css" rel="stylesheet"/>
+    <link href="/resources/css/myLink.css" rel="stylesheet"/>
+    <link href="/resources/css/myInput.css" rel="stylesheet"/>
 
 </head>
 <body>
-<form method="post" action="/registration">
-    <b>Регистрация </b>
+<form method="post" action="/">
     <p><br>
     <div class="mycont">
         <div class="margin-top8">
@@ -33,17 +32,22 @@
             <div>
                 <input type="text" class="css-input" name="email" placeholder="Электронная почта" value="" required>
             </div>
+            <div>
+                <input type="text" class="css-input" name="roles" placeholder="Роли" value="" required>
+            </div>
             <div class="mycont">
                 <div class="margin-top2">
-                    <input type="submit" class="myButton" value="Зарегистрироваться">
+                    <input type="submit" class="myButton" value="Добавить">
                 </div>
-            </div>
-
-            <div class="margin-top4">
-                <a href="/" class="myLink">Главная страница</a>
             </div>
         </div>
     </div>
 </form>
+
+<div class="mycont">
+    <div class="margin-top4">
+        <a href="/" class="myLink">В администрирование</a>
+    </div>
+</div>
 </body>
 </html>

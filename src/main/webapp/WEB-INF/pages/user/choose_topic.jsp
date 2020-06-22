@@ -6,6 +6,7 @@
     <link href="resources/css/myInput.css" rel="stylesheet"/>
     <link href="resources/css/myButton.css" rel="stylesheet"/>
     <link href="resources/css/mycont.css" rel="stylesheet"/>
+    <link href="resources/css/myLink.css" rel="stylesheet"/>
     <link href="resources/css/bootstrap-grid.min.css" rel="stylesheet" />
 </head>
 <body>
@@ -26,6 +27,9 @@
                     </select>
                     <div class="margin-top2">
                         <input type="submit" class="myButton" value="Выбрать тему"/>
+                    </div>
+                    <div class="margin-top4">
+                        <a href="/profile" class="myLink">Вернуться в профиль</a>
                     </div>
                 </form>
             </div>

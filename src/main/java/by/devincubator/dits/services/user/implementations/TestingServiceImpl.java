@@ -51,30 +51,21 @@ public class TestingServiceImpl implements TestingService {
     public boolean questionHasAnswers(QuestionDTO questionDTO) {
         return questionDTO.getUserAnswers() != null;
     }
-
-    @Override
-    public List<ResultDTO> fillResultDTO(TestPassingDTO testPassingDTO) {
-
-        List<ResultDTO> resultDTOList = new LinkedList<>();
-
-        List<QuestionDTO> questionDTOList = testPassingDTO.getQuestionsDTO();
-
-        for (QuestionDTO questionDTO : questionDTOList) {
-            Question question = questionDTO.getQuestion();
-
-            List<Answer> correctAnswers = answerService.findCorrectAnswers(question);
-            resultDTOList.add(
-                    new ResultDTO(question.getDescription(),
-                            answerService.answersAreEquals(
-                                    questionDTO.getUserAnswers(), correctAnswers
-                            ),
-                            formLiteratureDTOByQuestion(question))
-            );
-        }
-
-        return resultDTOList;
+    private long calculateCorrectAnswers(TestPassingDTO testPassingDTO) {
+        return testPassingDTO.getQuestionsDTO().stream()
+                .filter(questionDTO -> answerService.answersAreEquals(
+                        questionDTO.getUserAnswers(),
+                        answerService.findCorrectAnswers(questionDTO.getQuestion())
+                ))
+                .count();
     }
 
+    @Override
+    public ResultDTO fillResultDTO(TestPassingDTO testPassingDTO) {
+
+        return new ResultDTO(calculateCorrectAnswers(testPassingDTO),
+                testPassingDTO.getQuestionsDTO().size(), formLiteratureDTOByTestPassing(testPassingDTO));
+    }
 
     @Override
     public void saveResults(TestPassingDTO testPassingDTO, String username) {
@@ -108,6 +99,30 @@ public class TestingServiceImpl implements TestingService {
                         literatureService.formLinkToLiteratureInfo(literature)
                 ))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LiteratureDTO> formLiteratureDTOByTestPassing(TestPassingDTO testPassingDTO) {
+
+        List<Question> questionsWithCorrectAnswers = testPassingDTO.getQuestionsDTO().stream()
+                .filter(questionDTO -> !answerService.answersAreEquals(
+                        questionDTO.getUserAnswers(),
+                        answerService.findCorrectAnswers(questionDTO.getQuestion())
+                ))
+                .map(QuestionDTO::getQuestion)
+                .collect(Collectors.toList());
+
+        List<LiteratureDTO> literatureDTOS = new LinkedList<>();
+
+        for (Question question : questionsWithCorrectAnswers) {
+            for (Literature literature : literatureRepository.findByQuestion(question)) {
+                literatureDTOS.add(new LiteratureDTO(literature.getDescription(),
+                        literatureService.formLinkToLiteratureInfo(literature)));
+            }
+        }
+
+        return literatureDTOS;
+
     }
 
     @Override
