@@ -18,6 +18,7 @@ import by.devincubator.dits.services.user.interfaces.TestingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,6 +81,7 @@ public class TestingServiceImpl implements TestingService {
                     .isCorrect(answerService.answersAreEquals(
                             questionDTO.getUserAnswers(), correctAnswers
                     ))
+                    .date(new Date())
                     .build();
 
             statisticRepository.save(statistic);
