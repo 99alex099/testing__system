@@ -91,9 +91,7 @@ public class TestingServiceImpl implements TestingService {
     @Override
     public List<LiteratureDTO> formLiteratureDTOByQuestion(Question question) {
 
-        List<Literature> literatureList = literatureRepository.findByQuestion(question);
-
-        return literatureList.stream()
+        return literatureRepository.findByQuestion(question).stream()
                 .map(literature -> new LiteratureDTO(
                         literature.getDescription(),
                         literatureService.formLinkToLiteratureInfo(literature)
