@@ -3,12 +3,12 @@
 <head>
     <title>Тестирование</title>
 
-    <link href="resources/css/myInput.css" rel="stylesheet"/>
-    <link href="resources/css/myButton.css" rel="stylesheet"/>
-    <link href="resources/css/myLink.css" rel="stylesheet"/>
-    <link href="resources/css/mycont.css" rel="stylesheet"/>
-    <link href="resources/css/bootstrap-grid.min.css" rel="stylesheet" />
-    <link href="resources/css/loginFont.css" rel="stylesheet" />
+    <link href="/resources/css/myInput.css" rel="stylesheet"/>
+    <link href="/resources/css/myButton.css" rel="stylesheet"/>
+    <link href="/resources/css/myLink.css" rel="stylesheet"/>
+    <link href="/resources/css/mycont.css" rel="stylesheet"/>
+    <link href="/resources/css/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="/resources/css/loginFont.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -27,6 +27,9 @@
                     <div class="col-sm-10">
                         <div>
                             <a href="/testing" class="myLink">Пройти тестирование</a>
+                        </div>
+                        <div class="margin-top4">
+                            <a href="/choose_test" class="myLink">Выбрать другой тест</a>
                         </div>
                     </div>
                 </div>

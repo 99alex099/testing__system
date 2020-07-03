@@ -18,6 +18,7 @@ import by.devincubator.dits.services.user.interfaces.TestingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,23 +28,24 @@ public class TestingServiceImpl implements TestingService {
 
     private static final int FIRST_QUESTION_INDEX = 0;
 
-    @Autowired
-    private AnswerService answerService;
-    @Autowired
-    private LiteratureRepository literatureRepository;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private StatisticRepository statisticRepository;
-    @Autowired
-    private LiteratureService literatureService;
+    private final AnswerService answerService;
+    private final LiteratureRepository literatureRepository;
+    private final UserService userService;
+    private final StatisticRepository statisticRepository;
+    private final LiteratureService literatureService;
+
+    public TestingServiceImpl(AnswerService answerService, LiteratureRepository literatureRepository, UserService userService, StatisticRepository statisticRepository, LiteratureService literatureService) {
+        this.answerService = answerService;
+        this.literatureRepository = literatureRepository;
+        this.userService = userService;
+        this.statisticRepository = statisticRepository;
+        this.literatureService = literatureService;
+    }
 
     @Override
     public boolean testHasQuestionWithoutAnswer(TestPassingDTO testPassingDTO) {
 
-        List<QuestionDTO> questionDTOList = testPassingDTO.getQuestionsDTO();
-
-        return questionDTOList.stream()
+        return testPassingDTO.getQuestionsDTO().stream()
                 .anyMatch(question -> !questionHasAnswers(question));
     }
 
@@ -51,30 +53,21 @@ public class TestingServiceImpl implements TestingService {
     public boolean questionHasAnswers(QuestionDTO questionDTO) {
         return questionDTO.getUserAnswers() != null;
     }
-
-    @Override
-    public List<ResultDTO> fillResultDTO(TestPassingDTO testPassingDTO) {
-
-        List<ResultDTO> resultDTOList = new LinkedList<>();
-
-        List<QuestionDTO> questionDTOList = testPassingDTO.getQuestionsDTO();
-
-        for (QuestionDTO questionDTO : questionDTOList) {
-            Question question = questionDTO.getQuestion();
-
-            List<Answer> correctAnswers = answerService.findCorrectAnswers(question);
-            resultDTOList.add(
-                    new ResultDTO(question.getDescription(),
-                            answerService.answersAreEquals(
-                                    questionDTO.getUserAnswers(), correctAnswers
-                            ),
-                            formLiteratureDTOByQuestion(question))
-            );
-        }
-
-        return resultDTOList;
+    private long calculateCorrectAnswers(TestPassingDTO testPassingDTO) {
+        return testPassingDTO.getQuestionsDTO().stream()
+                .filter(questionDTO -> answerService.answersAreEquals(
+                        questionDTO.getUserAnswers(),
+                        answerService.findCorrectAnswers(questionDTO.getQuestion())
+                ))
+                .count();
     }
 
+    @Override
+    public ResultDTO fillResultDTO(TestPassingDTO testPassingDTO) {
+
+        return new ResultDTO(calculateCorrectAnswers(testPassingDTO),
+                testPassingDTO.getQuestionsDTO().size(), formLiteratureDTOByTestPassing(testPassingDTO));
+    }
 
     @Override
     public void saveResults(TestPassingDTO testPassingDTO, String username) {
@@ -91,6 +84,7 @@ public class TestingServiceImpl implements TestingService {
                     .isCorrect(answerService.answersAreEquals(
                             questionDTO.getUserAnswers(), correctAnswers
                     ))
+                    .date(new Date())
                     .build();
 
             statisticRepository.save(statistic);
@@ -100,14 +94,36 @@ public class TestingServiceImpl implements TestingService {
     @Override
     public List<LiteratureDTO> formLiteratureDTOByQuestion(Question question) {
 
-        List<Literature> literatureList = literatureRepository.findByQuestion(question);
-
-        return literatureList.stream()
+        return literatureRepository.findByQuestion(question).stream()
                 .map(literature -> new LiteratureDTO(
                         literature.getDescription(),
                         literatureService.formLinkToLiteratureInfo(literature)
                 ))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LiteratureDTO> formLiteratureDTOByTestPassing(TestPassingDTO testPassingDTO) {
+
+        List<Question> questionsWithCorrectAnswers = testPassingDTO.getQuestionsDTO().stream()
+                .filter(questionDTO -> !answerService.answersAreEquals(
+                        questionDTO.getUserAnswers(),
+                        answerService.findCorrectAnswers(questionDTO.getQuestion())
+                ))
+                .map(QuestionDTO::getQuestion)
+                .collect(Collectors.toList());
+
+        List<LiteratureDTO> literatureDTOS = new LinkedList<>();
+
+        for (Question question : questionsWithCorrectAnswers) {
+            for (Literature literature : literatureRepository.findByQuestion(question)) {
+                literatureDTOS.add(new LiteratureDTO(literature.getDescription(),
+                        literatureService.formLinkToLiteratureInfo(literature)));
+            }
+        }
+
+        return literatureDTOS;
+
     }
 
     @Override

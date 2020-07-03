@@ -12,6 +12,8 @@ public class UserInfoDTO {
     @Getter
     private String username;
     private List<RolesEnum> roleList;
+    @Getter
+    private boolean isAuthorised;
 
     public boolean isUser() {
         return roleList.contains(RolesEnum.ROLE_USER);

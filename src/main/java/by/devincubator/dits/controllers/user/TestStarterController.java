@@ -1,6 +1,5 @@
 package by.devincubator.dits.controllers.user;
 
-import by.devincubator.dits.services.general.dto.UserAnswersDTO;
 import by.devincubator.dits.services.general.interfaces.TopicService;
 import by.devincubator.dits.entities.Test;
 import by.devincubator.dits.entities.Topic;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
-@SessionAttributes(types = {Topic.class, TestPassingDTO.class, UserAnswersDTO.class},
+@SessionAttributes(types = {Topic.class, TestPassingDTO.class},
         value = {"selectedAnswers"})
 public class TestStarterController {
 
@@ -54,8 +53,7 @@ public class TestStarterController {
 
     @GetMapping(value = "/select_test")
     public String selectTest(Model model, Topic topic,
-                             @RequestParam("testOption") int testId,
-                             SessionStatus sessionStatus) {
+                             @RequestParam("testOption") int testId) {
 
         Test selectedTest = testService.findById(testId);
 
@@ -63,8 +61,6 @@ public class TestStarterController {
                 selectedTest,
                 testService.formQuestionsByTest(selectedTest));
 
-        //sessionStatus.setComplete(); //вставить в сервисы | разобраться со сессиями
-//        sessionStatus.setComplete();
         model.addAttribute("testPassing", testPassing);
         return "redirect:/start_test";
     }

@@ -9,6 +9,8 @@
     <link href="resources/css/bootstrap-grid.min.css" rel="stylesheet" />
 </head>
 <body>
+<div class="mycont">
+<div class="margin-top8">
 <div class="container-fluid">
     <div class="container">
         <div class="row">
@@ -27,11 +29,16 @@
                     <div class="margin-top2">
                         <input type="submit" class="myButton" value="Выбрать тему"/>
                     </div>
+                    <div class="margin-top4">
+                        <a href="/profile" class="myLink">Вернуться в профиль</a>
+                    </div>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 </body>
 

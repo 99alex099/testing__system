@@ -3,11 +3,10 @@ package by.devincubator.dits.services.general.implementations;
 import by.devincubator.dits.entities.Answer;
 import by.devincubator.dits.entities.Question;
 import by.devincubator.dits.repository.AnswerRepository;
-import by.devincubator.dits.services.general.exception.AnswerIdIsIncorrectException;
+import by.devincubator.dits.services.general.exceptions.AnswerIdIsIncorrectException;
 import by.devincubator.dits.services.general.interfaces.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;

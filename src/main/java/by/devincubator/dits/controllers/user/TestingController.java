@@ -1,6 +1,5 @@
 package by.devincubator.dits.controllers.user;
 
-import by.devincubator.dits.services.general.dto.UserAnswersDTO;
 import by.devincubator.dits.entities.Answer;
 import by.devincubator.dits.entities.Question;
 import by.devincubator.dits.services.general.dto.TestPassingDTO;
@@ -20,7 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/testing")
-@SessionAttributes(types = {TestPassingDTO.class, UserAnswersDTO.class},
+@SessionAttributes(types = {TestPassingDTO.class},
         value = {"selectedAnswers", "results"})
 public class TestingController {
 
@@ -33,14 +32,11 @@ public class TestingController {
     public String formQuestion(Model model,
                                @ModelAttribute(name = "testPassing") TestPassingDTO testPassing) {
 
-        UserAnswersDTO userAnswersDTO = new UserAnswersDTO();
-
         Question question = testPassing.getQuestionsDTO().get(
                 testPassing.getSelectedQuestion()
         ).getQuestion();
 
         model.addAttribute("question", question.getDescription());
-        model.addAttribute("userAnswers", userAnswersDTO);
         model.addAttribute("selectableAnswers", question.getAnswers());
 
         return "user/questionPage";
@@ -49,10 +45,9 @@ public class TestingController {
 
     @PostMapping
     @Transactional
-    public String checkAnswer(Model model,
-                              @ModelAttribute(name = "testPassing") TestPassingDTO testPassing,
-                              @RequestParam("userAnswersIds") List<Integer> userAnswersIds,
-                              SessionStatus sessionStatus) {
+    public String saveUserAnswers(Model model,
+                                  @ModelAttribute(name = "testPassing") TestPassingDTO testPassing,
+                                  @RequestParam("userAnswersIds") List<Integer> userAnswersIds) {
 
         List<Answer> answers = answerService.findAnswersById(userAnswersIds);
 
@@ -64,8 +59,7 @@ public class TestingController {
             return formNextQuestion(testPassing);
         } else {
 
-            //sessionStatus.setComplete();
-            model.addAttribute("results", testingService.fillResultDTO(testPassing));
+            model.addAttribute("result", testingService.fillResultDTO(testPassing));
             testingService.saveResults(testPassing, getPrincipal());
 
             return "redirect:/testing/result";
@@ -75,6 +69,8 @@ public class TestingController {
     @GetMapping("/result")
     public String formResultPage(Model model,
                                  @ModelAttribute(name = "testPassing") TestPassingDTO testPassing) {
+        System.out.println(testingService.fillResultDTO(testPassing));
+        model.addAttribute("result", testingService.fillResultDTO(testPassing));
         return "user/resultPage";
     }
 

@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <head>
     <title>Профиль</title>
-    <link href="resources/css/loginFont.css" rel="stylesheet" />
-    <link href="resources/css/linkFont.css" rel="stylesheet" />
-    <link href="resources/css/myLink.css" rel="stylesheet" />
-    <link href="resources/css/mycont.css" rel="stylesheet" />
-    <link href="resources/css/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="/resources/css/loginFont.css" rel="stylesheet" />
+    <link href="/resources/css/linkFont.css" rel="stylesheet" />
+    <link href="/resources/css/myLink.css" rel="stylesheet" />
+    <link href="/resources/css/mycont.css" rel="stylesheet" />
+    <link href="/resources/css/bootstrap-grid.min.css" rel="stylesheet" />
 </head>
 <body>
 <div id="loginFont">
@@ -28,7 +28,7 @@
                             <a href="/choose_topic" class="myLink">Выбор темы и теста</a>
                         </div>
                         <div>
-                            <a href="/logout" class="myLink">Выйти из аккаунта</a>
+                            <a href="/" class="myLink">Главное меню</a>
                         </div>
                     </div>
                 </div>

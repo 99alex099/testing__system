@@ -17,7 +17,6 @@ public class ProfileController {
         return "user/profilePage";
     }
 
-
     private static String getPrincipal() {
         String userName = null;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

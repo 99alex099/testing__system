@@ -1,16 +1,24 @@
 package by.devincubator.dits.services.general.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@ToString
 public class ResultDTO {
-    private String question;
-    public boolean isCorrectly;
+    private long correctAnswers;
+    private long allAnswers;
     private List<LiteratureDTO> literatureDTO;
+
+    public ResultDTO(long correctAnswers, long allAnswers, List<LiteratureDTO> literatureDTO) {
+        this.correctAnswers = correctAnswers;
+        this.allAnswers = allAnswers;
+        this.literatureDTO = literatureDTO;
+    }
+
+    public double getCorrectPercent() {
+        return correctAnswers / allAnswers * 100;
+    }
 }

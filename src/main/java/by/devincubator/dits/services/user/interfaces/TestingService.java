@@ -14,7 +14,8 @@ public interface TestingService {
     void previousQuestion(TestPassingDTO testPassingDTO);
     boolean testHasQuestionWithoutAnswer(TestPassingDTO testPassingDTO);
     boolean questionHasAnswers(QuestionDTO questionDTO);
-    List<ResultDTO> fillResultDTO(TestPassingDTO testPassingDTO);
+    ResultDTO fillResultDTO(TestPassingDTO testPassingDTO);
     void saveResults(TestPassingDTO testPassingDTO, String username);
     List<LiteratureDTO> formLiteratureDTOByQuestion(Question question);
+    List<LiteratureDTO> formLiteratureDTOByTestPassing(TestPassingDTO testPassingDTO);
 }
