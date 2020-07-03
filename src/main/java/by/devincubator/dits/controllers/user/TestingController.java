@@ -60,8 +60,6 @@ public class TestingController {
             return formNextQuestion(testPassing);
         } else {
 
-            //sessionStatus.setComplete();
-            //model.addAttribute("results", testingService.fillResultDTO(testPassing));
             model.addAttribute("result", testingService.fillResultDTO(testPassing));
             testingService.saveResults(testPassing, getPrincipal());
 
