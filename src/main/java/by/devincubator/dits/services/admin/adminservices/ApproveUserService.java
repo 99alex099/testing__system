@@ -1,4 +1,4 @@
-package by.devincubator.dits.services.admin.admininterfaces;
+package by.devincubator.dits.services.admin.adminservices;
 
 import by.devincubator.dits.entities.User;
 import by.devincubator.dits.services.admin.admindto.UserForApprovalDTO;

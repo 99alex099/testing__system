@@ -1,6 +1,6 @@
-package by.devincubator.dits.services.admin.admininterfaces.impl;
+package by.devincubator.dits.services.admin.adminservices.impl;
 
-import by.devincubator.dits.services.admin.admininterfaces.EmailSenderService;
+import by.devincubator.dits.services.admin.adminservices.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

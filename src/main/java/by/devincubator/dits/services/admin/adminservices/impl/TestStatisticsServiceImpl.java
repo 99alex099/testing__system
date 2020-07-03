@@ -1,11 +1,11 @@
-package by.devincubator.dits.services.admin.admininterfaces.impl;
+package by.devincubator.dits.services.admin.adminservices.impl;
 
 import by.devincubator.dits.entities.Statistic;
 import by.devincubator.dits.entities.Test;
 import by.devincubator.dits.repository.StatisticRepository;
 import by.devincubator.dits.repository.TestRepository;
 import by.devincubator.dits.services.admin.admindto.StatisticsDTO;
-import by.devincubator.dits.services.admin.admininterfaces.TestStatisticsService;
+import by.devincubator.dits.services.admin.adminservices.TestStatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

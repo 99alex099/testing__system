@@ -1,10 +1,10 @@
-package by.devincubator.dits.services.admin.admininterfaces.impl;
+package by.devincubator.dits.services.admin.adminservices.impl;
 
 import by.devincubator.dits.entities.User;
 import by.devincubator.dits.repository.UserRepository;
 import by.devincubator.dits.services.admin.admindto.UserForApprovalDTO;
-import by.devincubator.dits.services.admin.admininterfaces.ApproveUserService;
-import by.devincubator.dits.services.admin.admininterfaces.EmailSenderService;
+import by.devincubator.dits.services.admin.adminservices.ApproveUserService;
+import by.devincubator.dits.services.admin.adminservices.EmailSenderService;
 import by.devincubator.dits.services.general.exception.UserNotFoundByLoginException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

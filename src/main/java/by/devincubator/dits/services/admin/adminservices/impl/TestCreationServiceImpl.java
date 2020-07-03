@@ -1,9 +1,9 @@
-package by.devincubator.dits.services.admin.admininterfaces.impl;
+package by.devincubator.dits.services.admin.adminservices.impl;
 
 import by.devincubator.dits.entities.Question;
 import by.devincubator.dits.entities.Test;
 import by.devincubator.dits.entities.Topic;
-import by.devincubator.dits.services.admin.admininterfaces.TestCreationService;
+import by.devincubator.dits.services.admin.adminservices.TestCreationService;
 import by.devincubator.dits.services.general.exception.TestNotFoundedException;
 import by.devincubator.dits.services.general.exception.TopicNotFoundedByNameException;
 import by.devincubator.dits.services.general.exception.UnknownCreationException;

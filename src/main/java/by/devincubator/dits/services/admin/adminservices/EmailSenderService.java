@@ -1,4 +1,4 @@
-package by.devincubator.dits.services.admin.admininterfaces;
+package by.devincubator.dits.services.admin.adminservices;
 
 public interface EmailSenderService {
 
