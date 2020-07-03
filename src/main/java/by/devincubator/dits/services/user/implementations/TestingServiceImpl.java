@@ -41,9 +41,7 @@ public class TestingServiceImpl implements TestingService {
     @Override
     public boolean testHasQuestionWithoutAnswer(TestPassingDTO testPassingDTO) {
 
-        List<QuestionDTO> questionDTOList = testPassingDTO.getQuestionsDTO();
-
-        return questionDTOList.stream()
+        return testPassingDTO.getQuestionsDTO().stream()
                 .anyMatch(question -> !questionHasAnswers(question));
     }
 
