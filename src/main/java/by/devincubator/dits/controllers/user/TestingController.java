@@ -20,7 +20,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/testing")
-@SessionAttributes(types = {TestPassingDTO.class, UserAnswersDTO.class},
+@SessionAttributes(types = {TestPassingDTO.class},
         value = {"selectedAnswers", "results"})
 public class TestingController {
 
@@ -33,14 +33,11 @@ public class TestingController {
     public String formQuestion(Model model,
                                @ModelAttribute(name = "testPassing") TestPassingDTO testPassing) {
 
-        UserAnswersDTO userAnswersDTO = new UserAnswersDTO();
-
         Question question = testPassing.getQuestionsDTO().get(
                 testPassing.getSelectedQuestion()
         ).getQuestion();
 
         model.addAttribute("question", question.getDescription());
-        model.addAttribute("userAnswers", userAnswersDTO);
         model.addAttribute("selectableAnswers", question.getAnswers());
 
         return "user/questionPage";
