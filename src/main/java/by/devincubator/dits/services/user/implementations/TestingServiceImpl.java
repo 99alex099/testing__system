@@ -28,16 +28,19 @@ public class TestingServiceImpl implements TestingService {
 
     private static final int FIRST_QUESTION_INDEX = 0;
 
-    @Autowired
-    private AnswerService answerService;
-    @Autowired
-    private LiteratureRepository literatureRepository;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private StatisticRepository statisticRepository;
-    @Autowired
-    private LiteratureService literatureService;
+    private final AnswerService answerService;
+    private final LiteratureRepository literatureRepository;
+    private final UserService userService;
+    private final StatisticRepository statisticRepository;
+    private final LiteratureService literatureService;
+
+    public TestingServiceImpl(AnswerService answerService, LiteratureRepository literatureRepository, UserService userService, StatisticRepository statisticRepository, LiteratureService literatureService) {
+        this.answerService = answerService;
+        this.literatureRepository = literatureRepository;
+        this.userService = userService;
+        this.statisticRepository = statisticRepository;
+        this.literatureService = literatureService;
+    }
 
     @Override
     public boolean testHasQuestionWithoutAnswer(TestPassingDTO testPassingDTO) {

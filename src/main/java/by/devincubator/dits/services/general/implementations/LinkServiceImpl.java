@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class LinkServiceImpl implements LinkService {
 
-    @Autowired
-    private LinkRepository linkRepository;
+    private final LinkRepository linkRepository;
+
+    public LinkServiceImpl(LinkRepository linkRepository) {
+        this.linkRepository = linkRepository;
+    }
 
     @Override
     public Link findById(Integer id) {

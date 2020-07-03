@@ -26,18 +26,11 @@ public class TestServiceImpl implements TestService {
 
     private static final int FIRST_QUESTION_INDEX = 0;
 
-    @Autowired
-    private TestRepository testRepository;
-    @Autowired
-    private AnswerRepository answerRepository;
-    @Autowired
-    private AnswerService answerService;
-    @Autowired
-    private StatisticRepository statisticRepository;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private LiteratureRepository literatureRepository;
+    private final TestRepository testRepository;
+
+    public TestServiceImpl(TestRepository testRepository) {
+        this.testRepository = testRepository;
+    }
 
     @Override
     public Test findById(Integer id) {

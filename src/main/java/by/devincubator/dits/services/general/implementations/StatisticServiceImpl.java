@@ -17,10 +17,13 @@ import java.util.List;
 @Service
 public class StatisticServiceImpl implements StatisticService {
 
-    @Autowired
-    private StatisticRepository statisticRepository;
-    @Autowired
-    private UserService userService;
+    private final StatisticRepository statisticRepository;
+    private final UserService userService;
+
+    public StatisticServiceImpl(StatisticRepository statisticRepository, UserService userService) {
+        this.statisticRepository = statisticRepository;
+        this.userService = userService;
+    }
 
     @Override
     public Statistic findById(Integer id) {

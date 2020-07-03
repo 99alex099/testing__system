@@ -13,8 +13,11 @@ import java.util.List;
 @Service
 public class TopicServiceImpl implements TopicService {
 
-    @Autowired
-    private TopicRepository topicRepository;
+    private final TopicRepository topicRepository;
+
+    public TopicServiceImpl(TopicRepository topicRepository) {
+        this.topicRepository = topicRepository;
+    }
 
     @Override
     public Topic findByTopicId(Integer id) {

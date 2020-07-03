@@ -11,8 +11,11 @@ import java.util.List;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
-    @Autowired
-    private QuestionRepository questionRepository;
+    private final QuestionRepository questionRepository;
+
+    public QuestionServiceImpl(QuestionRepository questionRepository) {
+        this.questionRepository = questionRepository;
+    }
 
     @Override
     public Question findById(Integer id) {

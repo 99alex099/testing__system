@@ -12,8 +12,11 @@ public class LiteratureServiceImpl implements LiteratureService {
 
     private static final String START_LINK_LITERATURE_INFO = "/literature/";
 
-    @Autowired
-    private LiteratureRepository literatureRepository;
+    private final LiteratureRepository literatureRepository;
+
+    public LiteratureServiceImpl(LiteratureRepository literatureRepository) {
+        this.literatureRepository = literatureRepository;
+    }
 
     @Override
     public Literature findById(Integer id) {

@@ -30,11 +30,16 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private static final UserInfoDTO GUEST = new UserInfoDTO("guest", new LinkedList<>(),
             IS_NOT_AUTHORISED);
     private static final boolean IS_AUTHORISED = true;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
+
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
     @Override
     public User findUserById(Integer id) {

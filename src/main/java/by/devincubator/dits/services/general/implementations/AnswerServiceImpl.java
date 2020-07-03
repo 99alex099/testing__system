@@ -14,8 +14,11 @@ import java.util.stream.Collectors;
 @Service
 public class AnswerServiceImpl implements AnswerService {
 
-    @Autowired
-    private AnswerRepository answerRepository;
+    private final AnswerRepository answerRepository;
+
+    public AnswerServiceImpl(AnswerRepository answerRepository) {
+        this.answerRepository = answerRepository;
+    }
 
     @Override
     public Answer findById(Integer id) {
