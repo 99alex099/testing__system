@@ -9,7 +9,7 @@ import by.devincubator.dits.repository.StatisticRepository;
 import by.devincubator.dits.services.general.dto.LiteratureDTO;
 import by.devincubator.dits.services.general.dto.QuestionDTO;
 import by.devincubator.dits.services.general.dto.ResultDTO;
-import by.devincubator.dits.services.general.exceptions.TestNotHavingQuestions;
+import by.devincubator.dits.services.general.exception.TestNotHavingQuestions;
 import by.devincubator.dits.services.general.interfaces.AnswerService;
 import by.devincubator.dits.services.general.dto.TestPassingDTO;
 import by.devincubator.dits.services.general.interfaces.LiteratureService;

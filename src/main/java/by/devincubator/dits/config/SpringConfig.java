@@ -25,11 +25,9 @@ import java.util.Properties;
 @Configuration
 @ComponentScan({"by.devincubator.dits.controllers", "by.devincubator.dits.services",
         "by.devincubator.dits.repository", "by.devincubator.dits.entities", "by.devincubator.dits.config"})
-//@ComponentScan("by.devincubator")
 @EnableWebMvc
-@EnableJpaRepositories("by.devincubator.dits.repository")
+//@EnableJpaRepositories("by.devincubator.dits.repository")
 @EnableTransactionManagement
-//@EntityScan
 public class SpringConfig implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;

@@ -7,9 +7,14 @@ import java.util.List;
 
 public interface AnswerService {
     Answer findById(Integer id);
+
     Answer save(Answer answer);
+
     void delete(Answer answer);
+
     List<Answer> findCorrectAnswers(Question question);
+
     boolean answersAreEquals(List<Answer> userAnswers, List<Answer> correctAnswers);
+
     List<Answer> findAnswersById(List<Integer> answersId);
 }

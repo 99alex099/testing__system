@@ -27,6 +27,7 @@
                     <div class="margin-top2">
                         <input type="submit" class="myButton" value="Выбрать тему"/>
                     </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
             </div>
         </div>

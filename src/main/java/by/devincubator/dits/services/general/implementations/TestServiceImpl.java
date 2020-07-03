@@ -8,11 +8,10 @@ import by.devincubator.dits.repository.AnswerRepository;
 import by.devincubator.dits.repository.LiteratureRepository;
 import by.devincubator.dits.repository.StatisticRepository;
 import by.devincubator.dits.repository.TestRepository;
-import by.devincubator.dits.services.general.exceptions.TestIdIsIncorrectException;
+import by.devincubator.dits.services.general.exception.TestIdIsIncorrectException;
+import by.devincubator.dits.services.general.exception.TestNotFoundedException;
 import by.devincubator.dits.services.general.interfaces.AnswerService;
 import by.devincubator.dits.services.general.interfaces.TestService;
-import by.devincubator.dits.entities.*;
-import by.devincubator.dits.services.general.exceptions.TestNotFoundedException;
 import by.devincubator.dits.services.general.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,25 +25,48 @@ public class TestServiceImpl implements TestService {
 
     private static final int FIRST_QUESTION_INDEX = 0;
 
-    @Autowired
     private TestRepository testRepository;
-    @Autowired
     private AnswerRepository answerRepository;
-    @Autowired
     private AnswerService answerService;
-    @Autowired
     private StatisticRepository statisticRepository;
-    @Autowired
     private UserService userService;
-    @Autowired
     private LiteratureRepository literatureRepository;
+
+    @Autowired
+    public void setTestRepository(TestRepository testRepository) {
+        this.testRepository = testRepository;
+    }
+
+    @Autowired
+    public void setAnswerRepository(AnswerRepository answerRepository) {
+        this.answerRepository = answerRepository;
+    }
+
+    @Autowired
+    public void setAnswerService(AnswerService answerService) {
+        this.answerService = answerService;
+    }
+
+    @Autowired
+    public void setStatisticRepository(StatisticRepository statisticRepository) {
+        this.statisticRepository = statisticRepository;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setLiteratureRepository(LiteratureRepository literatureRepository) {
+        this.literatureRepository = literatureRepository;
+    }
 
     @Override
     public Test findById(Integer id) {
         return testRepository.findByTestId(id)
                 .orElseThrow(
-                        () -> new TestIdIsIncorrectException(id)
-                );
+                        () -> new TestIdIsIncorrectException(id));
     }
 
     @Override
@@ -86,6 +108,6 @@ public class TestServiceImpl implements TestService {
     @Override
     public Test findTestByName(String description) {
         return testRepository.findTestByName(description)
-                .orElse(null);
+                .orElseThrow(()->new TestNotFoundedException());
     }
 }

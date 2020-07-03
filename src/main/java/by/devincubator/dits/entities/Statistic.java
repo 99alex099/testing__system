@@ -19,13 +19,17 @@ public class Statistic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "statisticId")
     private Integer statisticId;
+
     @Column(name = "date")
     private Date date;
+
     @Column(name = "correct")
     private boolean isCorrect;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "questionId", nullable = false)
     private Question question;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", nullable = false)
     private User user;

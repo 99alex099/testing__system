@@ -51,10 +51,10 @@ public class QuestionsStatisticsServiceImpl implements QuestionsStatisticsServic
                 int successfullyPassed = findTotalSuccessfullyPassedQuestions(listOfParticularQuestionStatistics);
                 double percentageOfCorrectAnswers = (double) successfullyPassed / totalPassed * 100;
                 percentageOfCorrectAnswers = new BigDecimal(percentageOfCorrectAnswers).setScale(2, RoundingMode.HALF_UP).doubleValue();
-                statisticsDTO.setName(question.getDescription());
                 statisticsDTO.setTotalPassed(totalPassed);
                 statisticsDTO.setPercentageOfCorrectAnswers(percentageOfCorrectAnswers);
             }
+            statisticsDTO.setName(question.getDescription());
             listOfAllQuestionStatistics.add(statisticsDTO);
         }
         return listOfAllQuestionStatistics;

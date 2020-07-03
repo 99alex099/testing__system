@@ -1,20 +1,26 @@
 package by.devincubator.dits.services.general.implementations;
 
-import by.devincubator.dits.services.general.exceptions.RoleNameNotFoundException;
+import by.devincubator.dits.services.general.exception.RoleIdIsIncorrectException;
+import by.devincubator.dits.services.general.exception.RoleNameNotFoundException;
 import by.devincubator.dits.services.general.interfaces.RoleService;
 import by.devincubator.dits.repository.RoleRepository;
 import by.devincubator.dits.entities.Role;
-import by.devincubator.dits.services.general.exceptions.RoleIdIsIncorrectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class RoleServiceImpl implements RoleService {
 
-    @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    public void setRoleRepository(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
 
     @Override
     public Role findRoleByRoleId(Integer id) {

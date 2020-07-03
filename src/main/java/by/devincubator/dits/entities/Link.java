@@ -18,8 +18,10 @@ public class Link {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "linkId")
     private Integer linkId;
+
     @Column(name = "link")
     private String link;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "literatureId", nullable = false)
     private Literature literature;

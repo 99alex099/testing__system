@@ -19,14 +19,14 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "roleId")
     private Integer id;
+
     @Column(name = "roleName")
     private String roleName;
 
-    @ManyToMany
-    @JoinTable(name="roles_of_users",
-            joinColumns = @JoinColumn(name="roleId"),
-            inverseJoinColumns = @JoinColumn(name="userId")
-    )
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "roles_of_users",
+            joinColumns = @JoinColumn(name = "roleId"),
+            inverseJoinColumns = @JoinColumn(name = "userId"))
     private List<User> userList;
 
     @Override

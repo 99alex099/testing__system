@@ -1,5 +1,6 @@
 package by.devincubator.dits.config;
 
+import by.devincubator.dits.services.general.implementations.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -11,41 +12,48 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Qualifier("userServiceImpl")
-    @Autowired
-    private UserDetailsService userService;
-    private CustomSuccessHandler customSuccessHandler;
-
-    @Autowired
-    public void setCustomSuccessHandler(CustomSuccessHandler customSuccessHandler) {
-        this.customSuccessHandler = customSuccessHandler;
-    }
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsServiceImpl();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    //
-    @Autowired
-    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService);
+
+    @Bean
+    public AuthenticationSuccessHandler customSuccessHandler() {
+        return new CustomSuccessHandler();
     }
-///////////////////////////////////////////
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService())
+                .passwordEncoder(bCryptPasswordEncoder());
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding("UTF-8");
+        filter.setForceEncoding(true);
+
         http.authorizeRequests()
                 .antMatchers("/registration").not().fullyAuthenticated()
-                .antMatchers("/creationOptions").hasRole("ADMIN")
+                .antMatchers("/statisticsOptions", "/testStatistics", "/questionStatistics",
+                        "/usersStatistics", "/creationOptions", "/createTest", "/createUser", "/approveUser")
+                .access("hasRole('ADMIN')")
 
 
                 //users
@@ -68,9 +76,23 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .antMatchers("/my_statistic")
                 .access("hasRole('USER')")
 
-                .and().formLogin().loginPage("/login")
-                .loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password").and()
-                .csrf().disable().exceptionHandling().accessDeniedPage("/not_access");
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .usernameParameter("login")
+                .passwordParameter("password")
+                .successHandler(customSuccessHandler())
+
+                .and()
+                .logout()
+                .logoutSuccessUrl("/login")
+
+                .and()
+                .addFilterBefore(filter, CsrfFilter.class);
+
+
+//        .loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password").and()
+//                .csrf().disable().exceptionHandling().accessDeniedPage("/not_access");
 
     }
 

@@ -59,7 +59,7 @@ public class UserStatisticsServiceImpl implements UserStatisticsService {
 
                     double percentageOfCorrectAnswers = (double) findTotalSuccessfullyPassedQuestions(test, user) / totalPassed * 100;
                     percentageOfCorrectAnswers = new BigDecimal(percentageOfCorrectAnswers).setScale(2, RoundingMode.HALF_UP).doubleValue();
-                    int quantityOfTestsAttempts = totalPassed / test.getQuestions().size();
+                    int quantityOfTestsAttempts = findTotalAttemptsQuantity(test, user);
 
                     UserStatisticsDTO userStatisticsDTO = new UserStatisticsDTO();
                     userStatisticsDTO.setFullName(fullName);
@@ -89,5 +89,18 @@ public class UserStatisticsServiceImpl implements UserStatisticsService {
         List<Statistic> listOfAllStatisticsByTest = findAllStatisticsEntityByTestAndByUser(test, user);
         listOfAllStatisticsByTest.removeIf(s -> (!s.isCorrect()));
         return listOfAllStatisticsByTest.size();
+    }
+
+    private int getIdOfFirstQuestionOfTheTest(Test test) {
+        return test.getQuestions().get(0).getQuestionId();
+    }
+
+    private int findTotalAttemptsQuantity(Test test, User user) {
+        List<Statistic> listOfAllStatisticsByTestAndByUser = findAllStatisticsEntityByTestAndByUser(test, user);
+        int firstQuestionId = getIdOfFirstQuestionOfTheTest(test);
+
+        return (int) listOfAllStatisticsByTestAndByUser.stream()
+                .filter(s -> s.getQuestion().getQuestionId() == firstQuestionId)
+                .count();
     }
 }

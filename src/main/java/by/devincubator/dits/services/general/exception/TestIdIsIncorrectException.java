@@ -1,4 +1,4 @@
-package by.devincubator.dits.services.general.exceptions;
+package by.devincubator.dits.services.general.exception;
 
 public class TestIdIsIncorrectException extends RuntimeException {
     public TestIdIsIncorrectException(Integer id) {

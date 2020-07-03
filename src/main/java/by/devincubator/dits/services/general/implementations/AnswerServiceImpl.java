@@ -3,19 +3,25 @@ package by.devincubator.dits.services.general.implementations;
 import by.devincubator.dits.entities.Answer;
 import by.devincubator.dits.entities.Question;
 import by.devincubator.dits.repository.AnswerRepository;
-import by.devincubator.dits.services.general.exceptions.AnswerIdIsIncorrectException;
+import by.devincubator.dits.services.general.exception.AnswerIdIsIncorrectException;
 import by.devincubator.dits.services.general.interfaces.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class AnswerServiceImpl implements AnswerService {
 
-    @Autowired
     private AnswerRepository answerRepository;
+
+    @Autowired
+    public void setAnswerRepository(AnswerRepository answerRepository) {
+        this.answerRepository = answerRepository;
+    }
 
     @Override
     public Answer findById(Integer id) {
@@ -44,6 +50,7 @@ public class AnswerServiceImpl implements AnswerService {
     public boolean answersAreEquals(List<Answer> userAnswers, List<Answer> correctAnswers) {
         return userAnswers.equals(correctAnswers);
     }
+
     @Override
     public List<Answer> findAnswersById(List<Integer> answersId) {
         return answersId.stream()

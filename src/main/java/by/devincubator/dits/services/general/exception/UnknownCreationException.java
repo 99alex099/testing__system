@@ -1,4 +1,4 @@
-package by.devincubator.dits.services.general.exceptions;
+package by.devincubator.dits.services.general.exception;
 
 /**
  * {@code UnknownCreationException} is an unchecked exception,

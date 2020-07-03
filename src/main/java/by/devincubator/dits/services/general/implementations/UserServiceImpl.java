@@ -2,13 +2,12 @@ package by.devincubator.dits.services.general.implementations;
 
 import by.devincubator.dits.entities.RolesEnum;
 import by.devincubator.dits.services.general.dto.UserInfoDTO;
-import by.devincubator.dits.services.general.exceptions.*;
 import by.devincubator.dits.repository.RoleRepository;
 import by.devincubator.dits.repository.UserRepository;
 import by.devincubator.dits.entities.Role;
 import by.devincubator.dits.entities.User;
 import by.devincubator.dits.services.admin.admindto.UserDTO;
-import by.devincubator.dits.services.general.exceptions.*;
+import by.devincubator.dits.services.general.exception.*;
 import by.devincubator.dits.services.general.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,14 +23,27 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserDetailsService, UserService {
+public class UserServiceImpl implements UserService {
 
     private static final UserInfoDTO GUEST = new UserInfoDTO("guest", new LinkedList<>());
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private RoleRepository roleRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Autowired
+    public void setRoleRepository(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
+
+    @Autowired
+    public void setBCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @Override
     public User findUserById(Integer id) {
@@ -41,7 +53,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public User findByLogin(String login) {
         return userRepository.findByLogin(login)
-                .orElseThrow(() -> new UserNotFoundByLoginException(login));
+                .orElseThrow(() -> new UserNotFoundByLoginException("There is no user with such login " + login + " was found."));
     }
 
     @Override
@@ -80,6 +92,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
+    public List<User> findAllUnapprovedUsers() {
+        return userRepository.findAllUnapprovedUsers();
+    }
+
+    @Override
     public UserInfoDTO formUserInfoByUsername(String username) {
 
         Optional<User> userOptional = userRepository.findByLogin(username);
@@ -102,12 +119,15 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public User saveUserDTO(UserDTO userDTO) {
 
+        User user = null;
+
         try {
-            User user = findByLogin(userDTO.getLogin());
-            if (user != null) {
-                throw new UserAlreadyExistsException("User with the login " + userDTO.getLogin() + " already exists");
-            }
+            user = findByLogin(userDTO.getLogin());
         } catch (UserNotFoundByLoginException e) {
+        }
+
+        if (user != null) {
+            throw new UserAlreadyExistsException("User with the login " + userDTO.getLogin() + " already exists");
         }
 
         User userForSaving = User.builder()
@@ -122,14 +142,5 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 .build();
 
         return userRepository.save(userForSaving);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        User user = userRepository.findByLogin(username).orElseThrow(()
-                -> new UsernameNotFoundException(username));
-        user.setPassword(encoder.encode(user.getPassword()));
-        return user;
     }
 }

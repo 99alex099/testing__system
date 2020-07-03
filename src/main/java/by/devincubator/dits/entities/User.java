@@ -23,29 +23,35 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userId")
     private Integer userId;
+
     @Column(name = "firstName")
     private String firstName;
+
     @Column(name = "lastName")
     private String lastName;
+
     @Column(name = "patronymic")
     private String patronymic;
+
     @Column(name = "login")
     private String login;
+
     @Column(name = "password")
     private String password;
 
     @Column(name = "approved")
     private boolean isApproved;
 
-    @Column (name = "email")
+    @Column(name = "email")
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="roles_of_users",
-            joinColumns = @JoinColumn(name="userId"),
-            inverseJoinColumns = @JoinColumn(name="roleId")
+    @JoinTable(name = "roles_of_users",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "roleId")
     )
     private List<Role> roleList;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Statistic> statisticList;
 
@@ -57,6 +63,7 @@ public class User implements UserDetails {
                 ", lastName='" + lastName + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
+                ", isApproved='" + isApproved + '\'' +
                 ", roleList=" + roleList +
                 '}';
     }
@@ -90,6 +97,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isApproved;
     }
 }

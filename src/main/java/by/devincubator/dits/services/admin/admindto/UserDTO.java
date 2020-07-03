@@ -42,12 +42,10 @@ public class UserDTO {
 
     @NotNull
     @NotEmpty
-    @ValidEmail
+    @ValidEmail()
     private String email;
 
     private List<Role> roleList;
 
     private List<Statistic> statisticList;
-
-
 }

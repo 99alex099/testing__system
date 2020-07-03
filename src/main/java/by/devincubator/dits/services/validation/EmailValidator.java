@@ -1,5 +1,7 @@
 package by.devincubator.dits.services.validation;
 
+import by.devincubator.dits.services.general.exception.EmailIsNotValidException;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.regex.Matcher;
@@ -15,8 +17,12 @@ public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
     }
 
     @Override
-    public boolean isValid(final String username, final ConstraintValidatorContext context) {
-        return (validateEmail(username));
+    public boolean isValid(final String email, final ConstraintValidatorContext context) {
+
+        if (!validateEmail(email)) {
+            throw new EmailIsNotValidException("The email is not valid.");
+        }
+        return true;
     }
 
     private boolean validateEmail(final String email) {

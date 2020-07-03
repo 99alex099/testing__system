@@ -15,15 +15,19 @@ import java.util.List;
 @Entity
 @Table(name = "literature")
 public class Literature {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "literatureId")
     private Integer literatureId;
+
     @Column(name = "description")
     private String description;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "questionId", nullable = false)
     private Question question;
+
     @OneToMany(mappedBy = "literature", fetch = FetchType.EAGER)
     private List<Link> links;
 

@@ -12,7 +12,7 @@
     <div class="mycont">
         <div class="margin-top8">
             <div>
-                <input type="text" class="css-input" id="username" name="ssoId" placeholder="Логин" value="" required>
+                <input type="text" class="css-input" id="username" name="login" placeholder="Логин" value="" required>
             </div>
             <div>
                 <input type="password" class="css-input" id="password" name="password" placeholder="Пароль"
@@ -26,6 +26,7 @@
             <input type="submit" class="myButton" value="Войти">
         </div>
     </div>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
 </body>
 </html>

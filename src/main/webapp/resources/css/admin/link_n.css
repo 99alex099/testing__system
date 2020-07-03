@@ -1,0 +1,24 @@
+.link_n {
+    text-decoration: none;
+    color: #183fb0;
+    font-size: 1.3em;
+}
+
+.link_n:visited {
+    text-decoration: none;
+    color: #183fb0;
+}
+
+.link_n:hover {
+    text-decoration: none;
+    color: #00980c;
+    font-size: 1.35em;
+}
+
+.somefont {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    word-spacing: 2px;
+    color: #4e82be;
+}

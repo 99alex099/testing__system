@@ -1,0 +1,38 @@
+.mycont {
+    position: relative;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+    text-align: center;
+    vertical-align: middle;
+    display: block;
+}
+
+.margin-top20 {
+    margin-top: 8%;
+}
+
+.margin-top11 {
+    margin-top: 11%;
+}
+
+#margin-l {
+    margin-left: -25%;
+}
+
+#rowWidth {
+    width: 90%;
+}
+
+.margin-top2 {
+    margin-top: 2%;
+}
+
+.margin-top-5 {
+    margin-top: -5%;
+}
+
+.tbl {
+    width: 80%;
+    margin-top: 8%;
+}

@@ -1,4 +1,4 @@
-package by.devincubator.dits.services.general.exceptions;
+package by.devincubator.dits.services.general.exception;
 
 public class LinkIdIsIncorrectException extends RuntimeException {
     public LinkIdIsIncorrectException(Integer id) {

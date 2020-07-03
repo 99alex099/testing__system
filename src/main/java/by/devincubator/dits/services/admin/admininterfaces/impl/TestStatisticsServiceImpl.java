@@ -4,8 +4,8 @@ import by.devincubator.dits.entities.Statistic;
 import by.devincubator.dits.entities.Test;
 import by.devincubator.dits.repository.StatisticRepository;
 import by.devincubator.dits.repository.TestRepository;
-import by.devincubator.dits.services.admin.admininterfaces.TestStatisticsService;
 import by.devincubator.dits.services.admin.admindto.StatisticsDTO;
+import by.devincubator.dits.services.admin.admininterfaces.TestStatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,15 +43,15 @@ public class TestStatisticsServiceImpl implements TestStatisticsService {
 
             StatisticsDTO statisticsDTO = new StatisticsDTO();
             int totalPassed = findTotalPassedQuestions(test);
-            int quantityOfTestsAttempts = totalPassed/test.getQuestions().size();
+            int quantityOfTestsAttempts = totalPassed / test.getQuestions().size();
 
             if (quantityOfTestsAttempts != 0) {
                 double percentageOfCorrectAnswers = (double) findTotalSuccessfullyPassedQuestions(test) / totalPassed * 100;
                 percentageOfCorrectAnswers = new BigDecimal(percentageOfCorrectAnswers).setScale(2, RoundingMode.HALF_UP).doubleValue();
-                statisticsDTO.setName(test.getName());
                 statisticsDTO.setTotalPassed(quantityOfTestsAttempts);
                 statisticsDTO.setPercentageOfCorrectAnswers(percentageOfCorrectAnswers);
             }
+            statisticsDTO.setName(test.getName());
             listOfAllTestStatistics.add(statisticsDTO);
         }
         return listOfAllTestStatistics;

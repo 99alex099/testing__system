@@ -11,6 +11,7 @@
             First name:  <input type="text" name="firstName" th:value="*{firstName}"><br>
             Last name:  <input type="text" name="lastName" th:th:value="*{lastName}"><br>
         <input type="submit" value="Register"/>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
 </head>
 </html>

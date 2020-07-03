@@ -1,4 +1,4 @@
-package by.devincubator.dits.services.general.exceptions;
+package by.devincubator.dits.services.general.exception;
 
 import by.devincubator.dits.services.general.dto.TestPassingDTO;
 import lombok.Data;

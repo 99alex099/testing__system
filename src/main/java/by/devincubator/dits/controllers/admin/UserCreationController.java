@@ -1,8 +1,8 @@
 package by.devincubator.dits.controllers.admin;
 
-import by.devincubator.dits.services.general.interfaces.RoleService;
 import by.devincubator.dits.entities.Role;
 import by.devincubator.dits.services.admin.admindto.UserDTO;
+import by.devincubator.dits.services.general.interfaces.RoleService;
 import by.devincubator.dits.services.general.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,8 +46,9 @@ public class UserCreationController {
     }
 
     @PostMapping(value = "/createUser")
-    public ModelAndView createUser(@ModelAttribute("userDTO") @Valid UserDTO userDTO,
+    public ModelAndView createUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO,
                                    @RequestParam("chosenRole") String chosenRole) {
+
         ModelAndView modelAndView = new ModelAndView();
 
         userDTO.setRoleList(new ArrayList<>(Arrays.asList(roleService.findRoleByRoleName(chosenRole))));
@@ -56,5 +57,20 @@ public class UserCreationController {
         modelAndView.setViewName("adminPages/creationOptions");
         return modelAndView;
     }
+//удалить
+    @GetMapping(value = "/userPage")
+    public ModelAndView getUserPage() {
 
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("userPage");
+        return modelAndView;
+    }
+    //удалить
+    @GetMapping(value = "/tutorPage")
+    public ModelAndView getTutorPage() {
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("tutorPage");
+        return modelAndView;
+    }
 }

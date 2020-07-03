@@ -15,14 +15,18 @@ import java.util.Objects;
 @Entity
 @Table(name = "answers")
 public class Answer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "answerId")
     private Integer answerId;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "correct")
     private boolean isCorrect;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "questionId", nullable = false)
     private Question question;
