@@ -43,13 +43,19 @@ public class TestStatisticsServiceImpl implements TestStatisticsService {
 
             StatisticsDTO statisticsDTO = new StatisticsDTO();
             int totalPassed = findTotalPassedQuestions(test);
-            int quantityOfTestsAttempts = totalPassed / test.getQuestions().size();
+            int quantityOfQuestionsInTest = test.getQuestions().size();
 
-            if (quantityOfTestsAttempts != 0) {
-                double percentageOfCorrectAnswers = (double) findTotalSuccessfullyPassedQuestions(test) / totalPassed * 100;
-                percentageOfCorrectAnswers = new BigDecimal(percentageOfCorrectAnswers).setScale(2, RoundingMode.HALF_UP).doubleValue();
-                statisticsDTO.setTotalPassed(quantityOfTestsAttempts);
-                statisticsDTO.setPercentageOfCorrectAnswers(percentageOfCorrectAnswers);
+            if (quantityOfQuestionsInTest == 0) {
+                statisticsDTO.setTotalPassed(0);
+                statisticsDTO.setPercentageOfCorrectAnswers(0);
+            } else {
+                int quantityOfTestsAttempts = totalPassed / quantityOfQuestionsInTest;
+                if (quantityOfTestsAttempts != 0) {
+                    double percentageOfCorrectAnswers = (double) findTotalSuccessfullyPassedQuestions(test) / totalPassed * 100;
+                    percentageOfCorrectAnswers = new BigDecimal(percentageOfCorrectAnswers).setScale(2, RoundingMode.HALF_UP).doubleValue();
+                    statisticsDTO.setTotalPassed(quantityOfTestsAttempts);
+                    statisticsDTO.setPercentageOfCorrectAnswers(percentageOfCorrectAnswers);
+                }
             }
             statisticsDTO.setName(test.getName());
             listOfAllTestStatistics.add(statisticsDTO);
