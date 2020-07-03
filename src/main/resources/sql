@@ -132,9 +132,12 @@
     INSERT INTO testing_system.roles (roleName) VALUES ('ROLE_ADMIN');
     INSERT INTO testing_system.roles (roleName) VALUES ('ROLE_TUTOR');
 
-    INSERT INTO testing_system.users (firstName, lastName, login, patronymic, password, approved, email) VALUES ('Tom', 'Tailor', 'tom', 'Arnoldovich', 'tomtom', '1', 'tt@gmail.com');
-    INSERT INTO testing_system.users (firstName, lastName, login, patronymic, password, approved, email) VALUES ('Jackie', 'Chan', 'jack', 'Leevich', 'jackjack', '1', 'jackchan@mail.com');
-    INSERT INTO testing_system.users (firstName, lastName, login, patronymic, password, approved, email) VALUES ('Pam', 'Anderson', '1pam', 'Jackovna', '1a', '1', 'pam@icloud.com');
+//tomtom
+    INSERT INTO testing_system.users (firstName, lastName, login, patronymic, password, approved, email) VALUES ('Tom', 'Tailor', 'tom', 'Arnoldovich', '$2y$12$3N9MDEt2vRZ.ycdmxopAxeA40CccD3WcWsbveAMNC7j.kMZ/Htdii', '1', 'aa@aaaaa.aaa');
+//jackjack
+    INSERT INTO testing_system.users (firstName, lastName, login, patronymic, password, approved, email) VALUES ('Jackie', 'Chan', 'jack', 'Leevich', '$2y$12$BRcFWuLcpo7dPLtkc/f9dOPjzNpF4S1BXljVJGDBkwe971iTE4YAq', '1', 'aa@aaaaa.aaa');
+//1a
+    INSERT INTO testing_system.users (firstName, lastName, login, patronymic, password, approved, email) VALUES ('Pam', 'Anderson', '1pam', 'Jackovna', '$2y$12$xMOeRts/jWYvJKD4B4t.1eNYfNNi1JNnSPwgGrNuuct0xp3p7.Le.', '1', 'aa@aaaaa.aaa');
 
     INSERT INTO testing_system.topics (description, name) VALUES ('Темы, связанные с программированием', 'Программирование');
     INSERT INTO testing_system.topics (description, name) VALUES ('Темы, связанные с математикой', 'Математика');
@@ -318,3 +321,28 @@
     INSERT INTO testing_system.roles_of_users (userId, roleId) VALUES ('1', '2');
     INSERT INTO testing_system.roles_of_users (userId, roleId) VALUES ('2', '3');
     INSERT INTO testing_system.roles_of_users (userId, roleId) VALUES ('3', '1');
+
+    CREATE PROCEDURE `calculate_percent_correct_answers`(
+        IN selectedUserId int,
+        IN selectedQuestionId int
+    )
+    BEGIN
+
+        drop table if exists rating_tmp;
+        create temporary table rating_tmp (
+                                          `questionId` int unsigned,
+                                          `description` varchar(128),
+                                          `correctAns` int unsigned,
+                                          `allAns` int unsigned
+        );
+
+        insert into rating_tmp (questionId, description, correctAns, allAns)
+            (SELECT st.questionId, q.description, SUM(correct) AS 'correctAns', COUNT(correct) AS 'allAns'
+            FROM statistics st
+                      JOIN questions q ON st.questionId = q.questionId
+            WHERE st.userId = selectedUserId
+            GROUP BY st.questionId);
+
+        SELECT correctAns/allAns*100 FROM rating_tmp gs
+        WHERE gs.questionId = selectedQuestionId;
+    END
