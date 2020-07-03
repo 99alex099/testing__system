@@ -10,7 +10,7 @@
 
 </head>
 <body>
-<form method="post" action="/">
+<form method="post" action="/adminPanel/createTest">
     <p><br>
     <div class="mycont">
         <div class="margin-top8">

@@ -10,6 +10,8 @@
     <link href="resources/css/bootstrap-grid.min.css" rel="stylesheet" />
 </head>
 <body>
+<div class="mycont">
+<div class="margin-top8">
 <div class="container-fluid">
     <div class="container">
         <div class="row">
@@ -35,6 +37,8 @@
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 </body>
 

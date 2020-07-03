@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,7 +30,10 @@
                 <span style="color: #000000; ">/</span> <i>${result.allAnswers}</i>
                 <p>
                     <b><span style="color: #000000; ">Процент правильных ответов:</span>
-                        <i>${result.correctAnswers/result.allAnswers*100} %</i></b>
+                        <i>
+                            <fmt:formatNumber value="${result.correctAnswers/result.allAnswers*100}" maxFractionDigits="2"/>%
+                        </i>
+                    </b>
                 </p>
                 <p>
                     <c:if test="${result.correctAnswers/result.allAnswers*100 >= 50}">

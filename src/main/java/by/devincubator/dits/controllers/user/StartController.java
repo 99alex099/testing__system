@@ -51,7 +51,7 @@ public class StartController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);}
-        return "redirect:/login?logout";
+        return "redirect:/";
     }
 
     private static boolean isAuthenticated() {

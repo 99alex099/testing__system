@@ -8,10 +8,6 @@
     <link href="resources/css/bootstrap-grid.min.css" rel="stylesheet" />
 </head>
 <body>
-<div id="loginFont">
-    ${user}
-</div>
-
 <div class="mycont">
     <div class="margin-top8">
         <div class="container-fluid">

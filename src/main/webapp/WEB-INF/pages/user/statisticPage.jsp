@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -38,7 +39,8 @@
                 <td><span>
                     <div id="answersPercentFont">
                         <div style="text-align: center;">
-                            ${statistic.correctAnswersPercent} %
+
+                            <fmt:formatNumber value="${statistic.correctAnswersPercent}" maxFractionDigits="2"/> %
                         </div>
                     </div>
                 </span></td>
