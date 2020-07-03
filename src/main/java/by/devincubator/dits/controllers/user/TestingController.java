@@ -1,6 +1,5 @@
 package by.devincubator.dits.controllers.user;
 
-import by.devincubator.dits.services.general.dto.UserAnswersDTO;
 import by.devincubator.dits.entities.Answer;
 import by.devincubator.dits.entities.Question;
 import by.devincubator.dits.services.general.dto.TestPassingDTO;

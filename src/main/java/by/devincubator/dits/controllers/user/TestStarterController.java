@@ -1,6 +1,5 @@
 package by.devincubator.dits.controllers.user;
 
-import by.devincubator.dits.services.general.dto.UserAnswersDTO;
 import by.devincubator.dits.services.general.interfaces.TopicService;
 import by.devincubator.dits.entities.Test;
 import by.devincubator.dits.entities.Topic;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
-@SessionAttributes(types = {Topic.class, TestPassingDTO.class, UserAnswersDTO.class},
+@SessionAttributes(types = {Topic.class, TestPassingDTO.class},
         value = {"selectedAnswers"})
 public class TestStarterController {
 
