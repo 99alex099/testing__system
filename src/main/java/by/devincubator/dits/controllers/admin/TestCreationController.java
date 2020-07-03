@@ -1,6 +1,6 @@
 package by.devincubator.dits.controllers.admin;
 
-import by.devincubator.dits.services.admin.admininterfaces.TestCreationService;
+import by.devincubator.dits.services.admin.adminservices.TestCreationService;
 import by.devincubator.dits.services.general.interfaces.QuestionService;
 import by.devincubator.dits.services.general.interfaces.TestService;
 import by.devincubator.dits.services.general.interfaces.TopicService;

@@ -1,9 +1,9 @@
 package by.devincubator.dits.controllers.admin;
 
 
-import by.devincubator.dits.services.admin.admininterfaces.QuestionsStatisticsService;
-import by.devincubator.dits.services.admin.admininterfaces.TestStatisticsService;
-import by.devincubator.dits.services.admin.admininterfaces.UserStatisticsService;
+import by.devincubator.dits.services.admin.adminservices.QuestionsStatisticsService;
+import by.devincubator.dits.services.admin.adminservices.TestStatisticsService;
+import by.devincubator.dits.services.admin.adminservices.UserStatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
