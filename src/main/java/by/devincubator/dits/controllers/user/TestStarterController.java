@@ -53,8 +53,7 @@ public class TestStarterController {
 
     @GetMapping(value = "/select_test")
     public String selectTest(Model model, Topic topic,
-                             @RequestParam("testOption") int testId,
-                             SessionStatus sessionStatus) {
+                             @RequestParam("testOption") int testId) {
 
         Test selectedTest = testService.findById(testId);
 
@@ -62,8 +61,6 @@ public class TestStarterController {
                 selectedTest,
                 testService.formQuestionsByTest(selectedTest));
 
-        //sessionStatus.setComplete(); //вставить в сервисы | разобраться со сессиями
-//        sessionStatus.setComplete();
         model.addAttribute("testPassing", testPassing);
         return "redirect:/start_test";
     }
