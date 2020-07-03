@@ -3,8 +3,8 @@
 <html>
 <head>
     <title>Главная страница</title>
-    <link href="resources/css/myButton.css" rel="stylesheet" />
-    <link href="resources/css/mycont.css" rel="stylesheet" />
+    <link href="/resources/css/myButton.css" rel="stylesheet" />
+    <link href="/resources/css/mycont.css" rel="stylesheet" />
 </head>
 <body>
 <div class="mycont">

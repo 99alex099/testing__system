@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <head>
     <title>Профиль</title>
-    <link href="resources/css/loginFont.css" rel="stylesheet" />
-    <link href="resources/css/linkFont.css" rel="stylesheet" />
-    <link href="resources/css/myLink.css" rel="stylesheet" />
-    <link href="resources/css/mycont.css" rel="stylesheet" />
-    <link href="resources/css/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="/resources/css/loginFont.css" rel="stylesheet" />
+    <link href="/resources/css/linkFont.css" rel="stylesheet" />
+    <link href="/resources/css/myLink.css" rel="stylesheet" />
+    <link href="/resources/css/mycont.css" rel="stylesheet" />
+    <link href="/resources/css/bootstrap-grid.min.css" rel="stylesheet" />
 </head>
 <body>
 <div id="loginFont">

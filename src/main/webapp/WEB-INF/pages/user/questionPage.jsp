@@ -4,13 +4,13 @@
 <html>
 <head>
     <title>Тестирование</title>
-    <link href="resources/css/chooseAnsFont.css" rel="stylesheet" />
-    <link href="resources/css/questionFont.css" rel="stylesheet" />
-    <link href="resources/css/myButton.css" rel="stylesheet" />
-    <link href="resources/css/myLink.css" rel="stylesheet" />
-    <link href="resources/css/myCheckboxes.css" rel="stylesheet" />
-    <link href="resources/css/mycont.css" rel="stylesheet"/>
-    <link href="resources/css/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="/resources/css/chooseAnsFont.css" rel="stylesheet" />
+    <link href="/resources/css/questionFont.css" rel="stylesheet" />
+    <link href="/resources/css/myButton.css" rel="stylesheet" />
+    <link href="/resources/css/myLink.css" rel="stylesheet" />
+    <link href="/resources/css/myCheckboxes.css" rel="stylesheet" />
+    <link href="/resources/css/mycont.css" rel="stylesheet"/>
+    <link href="/resources/css/bootstrap-grid.min.css" rel="stylesheet" />
 
 </head>
 <body>

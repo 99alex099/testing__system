@@ -5,10 +5,10 @@
 <html>
 <head>
     <title>Личная статистика</title>
-    <link href="resources/css/myTable.css" rel="stylesheet"/>
-    <link href="resources/css/myLink.css" rel="stylesheet"/>
-    <link href="resources/css/answersPercentFont.css" rel="stylesheet"/>
-    <link href="resources/css/statisticQuestionFont.css" rel="stylesheet"/>
+    <link href="/resources/css/myTable.css" rel="stylesheet"/>
+    <link href="/resources/css/myLink.css" rel="stylesheet"/>
+    <link href="/resources/css/answersPercentFont.css" rel="stylesheet"/>
+    <link href="/resources/css/statisticQuestionFont.css" rel="stylesheet"/>
 </head>
 <body>
 

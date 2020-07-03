@@ -3,10 +3,10 @@
 <head>
     <title>Регистрация</title>
 
-    <link href="resources/css/myButton.css" rel="stylesheet"/>
-    <link href="resources/css/mycont.css" rel="stylesheet"/>
-    <link href="resources/css/myLink.css" rel="stylesheet"/>
-    <link href="resources/css/myInput.css" rel="stylesheet"/>
+    <link href="/resources/css/myButton.css" rel="stylesheet"/>
+    <link href="/resources/css/mycont.css" rel="stylesheet"/>
+    <link href="/resources/css/myLink.css" rel="stylesheet"/>
+    <link href="/resources/css/myInput.css" rel="stylesheet"/>
 
 </head>
 <body>

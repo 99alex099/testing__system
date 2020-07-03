@@ -3,12 +3,12 @@
 <head>
     <title>Тестирование</title>
 
-    <link href="resources/css/myInput.css" rel="stylesheet"/>
-    <link href="resources/css/myButton.css" rel="stylesheet"/>
-    <link href="resources/css/myLink.css" rel="stylesheet"/>
-    <link href="resources/css/mycont.css" rel="stylesheet"/>
-    <link href="resources/css/bootstrap-grid.min.css" rel="stylesheet" />
-    <link href="resources/css/loginFont.css" rel="stylesheet" />
+    <link href="/resources/css/myInput.css" rel="stylesheet"/>
+    <link href="/resources/css/myButton.css" rel="stylesheet"/>
+    <link href="/resources/css/myLink.css" rel="stylesheet"/>
+    <link href="/resources/css/mycont.css" rel="stylesheet"/>
+    <link href="/resources/css/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="/resources/css/loginFont.css" rel="stylesheet" />
 
 </head>
 <body>
