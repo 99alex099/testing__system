@@ -28,7 +28,7 @@ public class RegistrationController {
         userService.registrationUser(user);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/login");
+        modelAndView.setViewName("user/successfullyRegistrationPage");
         return modelAndView;
     }
 }

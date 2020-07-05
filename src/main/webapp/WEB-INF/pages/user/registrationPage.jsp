@@ -35,8 +35,10 @@
             </div>
             <div class="mycont">
                 <div class="margin-top2">
-                    <input type="submit" class="myButton" value="Зарегистрироваться">
+                    <input type="submit" class="myButton" value="Зарегистрироваться" >
                 </div>
+
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </div>
 
             <div class="margin-top4">
