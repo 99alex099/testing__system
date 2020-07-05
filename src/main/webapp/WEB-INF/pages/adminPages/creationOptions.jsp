@@ -43,6 +43,12 @@
                             </div>
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </form>
+                        <form action="/" method="get">
+                            <div class="margin-top2">
+                                <input type="submit" class="button_n_l" value="Главное меню">
+                            </div>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
                     </div>
                 </div>
             </div>

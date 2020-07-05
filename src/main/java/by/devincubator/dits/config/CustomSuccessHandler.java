@@ -36,11 +36,11 @@ public class CustomSuccessHandler  extends SimpleUrlAuthenticationSuccessHandler
             roles.add(a.getAuthority());
         }
         if (isTutor(roles)) {
-            url = "/tutor";
+            url = "/";
         } else if (isAdmin(roles)) {
-            url = "/creationOptions";
+            url = "/";
         } else if (isUser(roles)) {
-            url = "/user";
+            url = "/";
         } else {
             url = "/accessDenied";
         }

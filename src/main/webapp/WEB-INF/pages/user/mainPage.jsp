@@ -26,7 +26,7 @@
         </c:if>
         <c:if test="${user.admin}">
             <div class="margin-top2" >
-                <a href="/adminPanel" class="myButton">Администрирование</a>
+                <a href="/creationOptions" class="myButton">Администрирование</a>
             </div>
         </c:if>
         <c:if test="${user.authorised}">
