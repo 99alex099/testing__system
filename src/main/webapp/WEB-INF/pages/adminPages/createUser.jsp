@@ -48,19 +48,6 @@
                                     </label>
                                 </c:forEach>
                             </div>
-
-
-                            <%--                            <p>--%>
-                            <%--                                <input type="text" class="css-input" id="namesOfAllRoles" required list="roles"--%>
-                            <%--                                       placeholder="Роль"--%>
-                            <%--                                       name="chosenRole">--%>
-                            <%--                                <datalist id="roles">--%>
-                            <%--                                    <c:forEach items="${roles}" var="chosenRole">--%>
-                            <%--                                    <option value="${chosenRole}">--%>
-                            <%--                                        </c:forEach>--%>
-                            <%--                                </datalist>--%>
-                            <%--                            </p>--%>
-
                             <p>
                                 <input id="lastName" class="css-input" type="text" required="true" name="lastName"
                                        placeholder="Фамилия"/>
