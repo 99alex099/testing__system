@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -39,6 +40,7 @@ public class UserCreationController {
         modelAndView.addObject("roles", roleService.findAllRoles()
                 .stream()
                 .map(Role::getRoleName)
+                .map(r -> r.replace("ROLE_", ""))
                 .collect(Collectors.toList()));
         modelAndView.addObject("userDTO", new UserDTO());
         modelAndView.setViewName("adminPages/createUser");
@@ -47,30 +49,16 @@ public class UserCreationController {
 
     @PostMapping(value = "/createUser")
     public ModelAndView createUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO,
-                                   @RequestParam("chosenRole") String chosenRole) {
+                                   @RequestParam("rolll") List<String> chosenRole) {
 
         ModelAndView modelAndView = new ModelAndView();
 
-        userDTO.setRoleList(new ArrayList<>(Arrays.asList(roleService.findRoleByRoleName(chosenRole))));
+        List<Role> listOfUsersRole = userService.getRoleListForUserDTO(chosenRole);
+
+        userDTO.setRoleList(listOfUsersRole);
         userService.saveUserDTO(userDTO);
 
         modelAndView.setViewName("adminPages/creationOptions");
-        return modelAndView;
-    }
-//удалить
-    @GetMapping(value = "/userPage")
-    public ModelAndView getUserPage() {
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("userPage");
-        return modelAndView;
-    }
-    //удалить
-    @GetMapping(value = "/tutorPage")
-    public ModelAndView getTutorPage() {
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("tutorPage");
         return modelAndView;
     }
 }

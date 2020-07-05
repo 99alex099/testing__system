@@ -1,13 +1,12 @@
 package by.devincubator.dits.services.general.interfaces;
 
+import by.devincubator.dits.entities.Role;
 import by.devincubator.dits.entities.User;
 import by.devincubator.dits.services.admin.admindto.UserDTO;
 import by.devincubator.dits.services.general.dto.UserInfoDTO;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface UserService {
     User findUserById(Integer id);
 
@@ -28,4 +27,6 @@ public interface UserService {
     UserInfoDTO formGuestUserDTO();
 
     List<User> findAllUnapprovedUsers();
+
+    public List<Role> getRoleListForUserDTO(List<String> listOfStringRoles);
 }

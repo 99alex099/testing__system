@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -145,5 +146,24 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         return userRepository.save(userForSaving);
+    }
+
+    public List<Role> getRoleListForUserDTO(List<String> listOfStringRoles) {
+
+        List<Role> listOfUserRoles = new ArrayList<>();
+        List<Role> listOfExistingRoles = roleRepository.findAll();
+
+        List<String> listOfFullUserRoleInString = listOfStringRoles.stream()
+                .map(r -> "ROLE_".concat(r))
+                .collect(Collectors.toList());
+
+        for (Role r : listOfExistingRoles) {
+            for (String sr : listOfFullUserRoleInString) {
+                if (r.getRoleName().equals(sr)) {
+                    listOfUserRoles.add(r);
+                }
+            }
+        }
+        return listOfUserRoles;
     }
 }
