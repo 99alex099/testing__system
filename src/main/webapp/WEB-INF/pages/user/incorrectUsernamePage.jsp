@@ -19,7 +19,7 @@
                 <b>Пользователь с ником <i><span style="color: #FF6000; ">${username}</span></i> уже существует!</b>
             </div>
             <div class="margin-top4">
-                <a href="/registration" class="myLink">Вернуться в профиль</a>
+                <a href="/registration" class="myLink">Вернуться на страницу регистрации</a>
             </div>
 
         </div>
