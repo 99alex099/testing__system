@@ -20,6 +20,9 @@
 <c:if test="${!empty incorrectEmail}">
     <h4>${incorrectEmail}</h4>
 </c:if>
+<c:if test="${!empty invalidRoleList}">
+    <h4>${invalidRoleList}</h4>
+</c:if>
 <div class="mycont">
     <div class="margin-top11">
 
@@ -40,7 +43,7 @@
                                 <c:forEach var="possibleRoles" items="${roles}">
                                     <label class="control control-checkbox">
                                             ${possibleRoles}
-                                        <input type="checkbox" name="rolll" value="${possibleRoles}" />
+                                        <input type="checkbox" name="rolll" value="${possibleRoles}"/>
                                         <div class="control_indicator"></div>
                                     </label>
                                 </c:forEach>
