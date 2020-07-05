@@ -1,21 +1,17 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <html>
 <head>
-    <title>new account</title>
-    <b>Registration </b>
+    <title>Регистрация</title>
 
-    <form method="post" th:object="${user}" action="/registration">
-        <p>Registration:<br>
-            Login: <input type="text" name="login" th:value="*{login}"><br>
-            Password:  <input type="text" name="password" th:value="*{password}"><br>
-            First name:  <input type="text" name="firstName" th:value="*{firstName}"><br>
-            Last name:  <input type="text" name="lastName" th:th:value="*{lastName}"><br>
-        <input type="submit" value="Register"/>
-    </form>
+    <link href="/resources/css/mycont.css" rel="stylesheet"/>
+
+    <link href="/resources/css/myButton.css" rel="stylesheet"/>
+    <link href="/resources/css/mycont.css" rel="stylesheet"/>
+    <link href="/resources/css/myInput.css" rel="stylesheet"/>
+    <link href="/resources/css/myLink.css" rel="stylesheet"/>
 </head>
 <body>
 <form method="post" action="/registration">
-    <b>Регистрация </b>
     <p><br>
     <div class="mycont">
         <div class="margin-top8">
