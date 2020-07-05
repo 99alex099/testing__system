@@ -9,6 +9,7 @@
     <link href="<c:url value="/resources/css/admin/mycont_n.css"/>" rel="stylesheet" type="text/css"/>
     <link href="<c:url value="/resources/css/admin/input_n.css"/>" rel="stylesheet" type="text/css"/>
     <link href="<c:url value="/resources/css/admin/link_n.css"/>" rel="stylesheet" type="text/css"/>
+    <link href="<c:url value="/resources/css/admin/checkbox_n.css"/>" rel="stylesheet" type="text/css"/>
     <title>Create user</title>
 </head>
 <body>
@@ -35,16 +36,27 @@
                     <div>
                         <form method="post" action="/createUser">
 
-                            <p>
-                                <input type="text" class="css-input" id="namesOfAllRoles" required list="roles"
-                                       placeholder="Роль"
-                                       name="chosenRole">
-                                <datalist id="roles">
-                                    <c:forEach items="${roles}" var="chosenRole">
-                                    <option value="${chosenRole}">
-                                        </c:forEach>
-                                </datalist>
-                            </p>
+                            <div class="control-group">
+                                <c:forEach var="possibleRoles" items="${roles}">
+                                    <label class="control control-checkbox">
+                                            ${possibleRoles}
+                                        <input type="checkbox" name="rolll" value="${possibleRoles}" />
+                                        <div class="control_indicator"></div>
+                                    </label>
+                                </c:forEach>
+                            </div>
+
+
+                            <%--                            <p>--%>
+                            <%--                                <input type="text" class="css-input" id="namesOfAllRoles" required list="roles"--%>
+                            <%--                                       placeholder="Роль"--%>
+                            <%--                                       name="chosenRole">--%>
+                            <%--                                <datalist id="roles">--%>
+                            <%--                                    <c:forEach items="${roles}" var="chosenRole">--%>
+                            <%--                                    <option value="${chosenRole}">--%>
+                            <%--                                        </c:forEach>--%>
+                            <%--                                </datalist>--%>
+                            <%--                            </p>--%>
 
                             <p>
                                 <input id="lastName" class="css-input" type="text" required="true" name="lastName"
