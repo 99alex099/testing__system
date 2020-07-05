@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,6 +51,7 @@ public class AnswerServiceImpl implements AnswerService {
     public boolean answersAreEquals(List<Answer> userAnswers, List<Answer> correctAnswers) {
         return userAnswers.equals(correctAnswers);
     }
+
 
     @Override
     public List<Answer> findAnswersById(List<Integer> answersId) {

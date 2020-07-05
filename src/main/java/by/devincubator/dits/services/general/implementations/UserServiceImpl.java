@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private static final boolean IS_NOT_AUTHORISED = false;
+    private static final boolean IS_AUTHORISED = true;
     private static final UserInfoDTO GUEST = new UserInfoDTO("guest", new LinkedList<>(), IS_NOT_AUTHORISED);
     private static final boolean IS_AUTHORISED = true;
     private UserRepository userRepository;
