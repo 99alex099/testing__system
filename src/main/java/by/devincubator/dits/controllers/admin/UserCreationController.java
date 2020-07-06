@@ -2,8 +2,10 @@ package by.devincubator.dits.controllers.admin;
 
 import by.devincubator.dits.entities.Role;
 import by.devincubator.dits.services.admin.admindto.UserDTO;
+import by.devincubator.dits.services.general.exception.InvalidRoleListException;
 import by.devincubator.dits.services.general.interfaces.RoleService;
 import by.devincubator.dits.services.general.interfaces.UserService;
+import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,9 +51,13 @@ public class UserCreationController {
 
     @PostMapping(value = "/createUser")
     public ModelAndView createUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO,
-                                   @RequestParam("rolll") List<String> chosenRole) {
+                                   @RequestParam(value = "rolll", required = false) List<String> chosenRole) {
 
         ModelAndView modelAndView = new ModelAndView();
+
+        if (chosenRole == null) {
+            throw new InvalidRoleListException("Некорректный список ролей.\\nПроверьте свой выбор и попробуйте снова.");
+        }
 
         List<Role> listOfUsersRole = userService.getRoleListForUserDTO(chosenRole);
 

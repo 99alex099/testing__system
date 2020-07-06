@@ -148,14 +148,18 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(userForSaving);
     }
 
-    public List<Role> getRoleListForUserDTO(List<String> listOfStringRoles) {
+    public List<Role> getRoleListForUserDTO(List<String> listOfSimpleStringRoles) {
 
         List<Role> listOfUserRoles = new ArrayList<>();
         List<Role> listOfExistingRoles = roleRepository.findAll();
 
-        List<String> listOfFullUserRoleInString = listOfStringRoles.stream()
-                .map(r -> "ROLE_".concat(r))
+        List<String> listOfFullUserRoleInString = listOfSimpleStringRoles.stream()
+                .map("ROLE_"::concat)
                 .collect(Collectors.toList());
+
+        if (!validateRoleList(listOfFullUserRoleInString, listOfExistingRoles)) {
+            throw new InvalidRoleListException("Invalid role.");
+        }
 
         for (Role r : listOfExistingRoles) {
             for (String sr : listOfFullUserRoleInString) {
@@ -165,5 +169,19 @@ public class UserServiceImpl implements UserService {
             }
         }
         return listOfUserRoles;
+    }
+
+    private boolean validateRoleList(List<String> listOfRolesNames, List<Role> listOfRolesFromDB) {
+
+        boolean isValid = false;
+
+        List<String> listOfRolesNamesFromDB = listOfRolesFromDB.stream()
+                .map(Role::getRoleName)
+                .collect(Collectors.toList());
+
+        for (String roleFromForm : listOfRolesNames) {
+            isValid = listOfRolesNamesFromDB.contains(roleFromForm);
+        }
+        return isValid;
     }
 }
