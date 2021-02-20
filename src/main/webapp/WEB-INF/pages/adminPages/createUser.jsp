@@ -29,7 +29,7 @@
         <div class="row" id="rowWidth">
             <div class="col">
                 <div class="mycont">
-                    <img src="/resources/images/logo_.png" alt="dev incubator logo">
+                    <img src="/resources/images/logo.png" alt="dev incubator logo">
                 </div>
             </div>
 
