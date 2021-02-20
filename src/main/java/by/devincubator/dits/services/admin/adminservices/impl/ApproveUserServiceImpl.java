@@ -36,7 +36,8 @@ public class ApproveUserServiceImpl implements ApproveUserService {
                 orElseThrow(() -> new UserNotFoundByLoginException("There is no user with such login."));
         user.setApproved(true);
         String fullName = getFullName(user);
-        emailSenderService.sendEmail(fullName, user.getEmail());
+
+        //emailSenderService.sendEmail(fullName, user.getEmail());
     }
 
     @Override

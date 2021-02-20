@@ -45,15 +45,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        CharacterEncodingFilter filter = new CharacterEncodingFilter();
-        filter.setEncoding("UTF-8");
-        filter.setForceEncoding(true);
-
         http.authorizeRequests()
                 .antMatchers("/registration").not().fullyAuthenticated()
-                .antMatchers("/statisticsOptions", "/testStatistics", "/questionStatistics",
-                        "/usersStatistics", "/creationOptions", "/createTest", "/createUser", "/approveUser")
-                .access("hasRole('ADMIN')")
+                .antMatchers("/creationOptions").hasRole("ADMIN")
 
 
                 //users
@@ -76,19 +70,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/my_statistic")
                 .access("hasRole('USER')")
 
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .usernameParameter("login")
-                .passwordParameter("password")
-                .successHandler(customSuccessHandler())
-
-                .and()
-                .logout()
-                .logoutSuccessUrl("/login")
-
-                .and()
-                .addFilterBefore(filter, CsrfFilter.class);
+                .and().formLogin().loginPage("/login")
+                .loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password").and()
+                .csrf().disable().exceptionHandling().accessDeniedPage("/not_access");
 
 
 //        .loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password").and()

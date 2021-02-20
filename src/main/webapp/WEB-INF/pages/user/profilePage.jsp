@@ -18,7 +18,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-2">
-                <img src="resources/images/logo.png" alt="logo">
+                <img src="resources/images/logo.png" height="200" weight="250" alt="logo">
             </div>
             <div class="col-sm-10">
                         <div>

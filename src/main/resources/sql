@@ -327,8 +327,7 @@
         IN selectedQuestionId int
     )
     BEGIN
-
-        drop table if exists rating_tmp;
+drop table if exists rating_tmp;
         create temporary table rating_tmp (
                                           `questionId` int unsigned,
                                           `description` varchar(128),
@@ -345,4 +344,5 @@
 
         SELECT correctAns/allAns*100 FROM rating_tmp gs
         WHERE gs.questionId = selectedQuestionId;
+
     END

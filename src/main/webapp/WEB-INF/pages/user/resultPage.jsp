@@ -19,7 +19,7 @@
 
 <div class="row">
     <div class="col">
-        <img src="/resources/images/logo.png" alt="logo">
+        <img src="/resources/images/logo.png" height="200" weight="250" alt="logo">
     </div>
     <div class="col">
         <div id="incorrectAnswerFont">
