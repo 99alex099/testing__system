@@ -103,7 +103,7 @@ public class TestingServiceImpl implements TestingService {
         }
 
         logService.write(String.format(
-                "прошёл тест %s и верно ответил на %d вопросов из %d",
+                "прошёл тест \"%s\" и верно ответил на %d вопросов из %d",
                 testPassingDTO.getSelectedTest().getTopic().getName(),
                 countCorrectAnswers, questionDTOList.size()),
                 username);

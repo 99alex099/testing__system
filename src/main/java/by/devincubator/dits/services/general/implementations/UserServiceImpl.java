@@ -2,6 +2,7 @@ package by.devincubator.dits.services.general.implementations;
 
 import by.devincubator.dits.entities.RolesEnum;
 import by.devincubator.dits.logger.services.LogService;
+import by.devincubator.dits.services.admin.admindto.UserLogDTO;
 import by.devincubator.dits.services.general.dto.UserInfoDTO;
 import by.devincubator.dits.repository.RoleRepository;
 import by.devincubator.dits.repository.UserRepository;
@@ -53,6 +54,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public void setBCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    @Override
+    public List<UserLogDTO> findAllForLogs() {
+        return userRepository.findAll().stream()
+                .map(UserLogDTO::new)
+                .collect(Collectors.toList());
     }
 
     @Override

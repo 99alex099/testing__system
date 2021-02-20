@@ -3,12 +3,15 @@ package by.devincubator.dits.services.general.interfaces;
 import by.devincubator.dits.entities.Role;
 import by.devincubator.dits.entities.User;
 import by.devincubator.dits.services.admin.admindto.UserDTO;
+import by.devincubator.dits.services.admin.admindto.UserLogDTO;
 import by.devincubator.dits.services.general.dto.UserInfoDTO;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface UserService {
+    List<UserLogDTO> findAllForLogs();
+
     User findUserById(Integer id);
 
     User findByLogin(String login);

@@ -18,7 +18,7 @@
         <div class="row" id="rowWidth">
             <div class="col">
                 <div class="mycont">
-                    <img src="/resources/images/logo.png" alt="dev incubator logo">
+                    <img src="resources/images/logo.png" height="200" weight="250" alt="logo">
                 </div>
             </div>
 
@@ -35,6 +35,9 @@
                     </div>
                     <div>
                         <a class="link_n" href="<c:url value="/statisticsOptions"/>">Статистика</a>
+                    </div>
+                    <div>
+                        <a class="link_n" href="<c:url value="/logs"/>">Просмотреть журнал действий</a>
                     </div>
                     <div>
                         <form action="/logout" method="post">
