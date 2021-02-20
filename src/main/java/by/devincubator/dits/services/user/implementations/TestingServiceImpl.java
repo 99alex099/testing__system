@@ -4,6 +4,7 @@ import by.devincubator.dits.entities.Answer;
 import by.devincubator.dits.entities.Literature;
 import by.devincubator.dits.entities.Question;
 import by.devincubator.dits.entities.Statistic;
+import by.devincubator.dits.logger.services.LogService;
 import by.devincubator.dits.repository.LiteratureRepository;
 import by.devincubator.dits.repository.StatisticRepository;
 import by.devincubator.dits.services.general.dto.LiteratureDTO;
@@ -18,6 +19,7 @@ import by.devincubator.dits.services.user.interfaces.TestingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,13 +35,15 @@ public class TestingServiceImpl implements TestingService {
     private final UserService userService;
     private final StatisticRepository statisticRepository;
     private final LiteratureService literatureService;
+    private final LogService logService;
 
-    public TestingServiceImpl(AnswerService answerService, LiteratureRepository literatureRepository, UserService userService, StatisticRepository statisticRepository, LiteratureService literatureService) {
+    public TestingServiceImpl(AnswerService answerService, LiteratureRepository literatureRepository, UserService userService, StatisticRepository statisticRepository, LiteratureService literatureService, LogService logService) {
         this.answerService = answerService;
         this.literatureRepository = literatureRepository;
         this.userService = userService;
         this.statisticRepository = statisticRepository;
         this.literatureService = literatureService;
+        this.logService = logService;
     }
 
     @Override
@@ -70,25 +74,39 @@ public class TestingServiceImpl implements TestingService {
     }
 
     @Override
-    public void saveResults(TestPassingDTO testPassingDTO, String username) {
+    public void saveResults(TestPassingDTO testPassingDTO, String username) throws SQLException {
         List<QuestionDTO> questionDTOList = testPassingDTO.getQuestionsDTO();
+
+        int countCorrectAnswers = 0;
 
         for (QuestionDTO questionDTO : questionDTOList) {
             Question question = questionDTO.getQuestion();
 
             List<Answer> correctAnswers = answerService.findCorrectAnswers(question);
 
+            boolean isCorrect = answerService.answersAreEquals(
+                    questionDTO.getUserAnswers(), correctAnswers
+            );
+
+            if (isCorrect) {
+                countCorrectAnswers++;
+            }
+
             Statistic statistic = Statistic.builder()
                     .user(userService.findByLogin(username))
                     .question(question)
-                    .isCorrect(answerService.answersAreEquals(
-                            questionDTO.getUserAnswers(), correctAnswers
-                    ))
+                    .isCorrect(isCorrect)
                     .date(new Date())
                     .build();
 
             statisticRepository.save(statistic);
         }
+
+        logService.write(String.format(
+                "прошёл тест %s и верно ответил на %d вопросов из %d",
+                testPassingDTO.getSelectedTest().getTopic().getName(),
+                countCorrectAnswers, questionDTOList.size()),
+                username);
     }
 
     @Override

@@ -5,6 +5,7 @@ import by.devincubator.dits.entities.User;
 import by.devincubator.dits.services.admin.admindto.UserDTO;
 import by.devincubator.dits.services.general.dto.UserInfoDTO;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface UserService {
@@ -16,7 +17,7 @@ public interface UserService {
 
     User saveUser(User user);
 
-    User saveUserDTO(UserDTO userDTO);
+    User saveUserDTO(UserDTO userDTO) throws SQLException;
 
     User registrationUser(User user);
 

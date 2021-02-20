@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,7 +52,7 @@ public class UserCreationController {
 
     @PostMapping(value = "/createUser")
     public ModelAndView createUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO,
-                                   @RequestParam(value = "rolll", required = false) List<String> chosenRole) {
+                                   @RequestParam(value = "rolll", required = false) List<String> chosenRole) throws SQLException {
 
         ModelAndView modelAndView = new ModelAndView();
 

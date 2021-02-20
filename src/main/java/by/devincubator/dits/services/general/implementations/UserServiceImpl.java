@@ -1,6 +1,7 @@
 package by.devincubator.dits.services.general.implementations;
 
 import by.devincubator.dits.entities.RolesEnum;
+import by.devincubator.dits.logger.services.LogService;
 import by.devincubator.dits.services.general.dto.UserInfoDTO;
 import by.devincubator.dits.repository.RoleRepository;
 import by.devincubator.dits.repository.UserRepository;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,6 +34,11 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final LogService logService;
+
+    public UserServiceImpl(LogService logService) {
+        this.logService = logService;
+    }
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -121,7 +128,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUserDTO(UserDTO userDTO) {
+    public User saveUserDTO(UserDTO userDTO) throws SQLException {
 
         User user = null;
 
@@ -144,6 +151,8 @@ public class UserServiceImpl implements UserService {
                 .email(userDTO.getEmail())
                 .roleList(userDTO.getRoleList())
                 .build();
+
+        logService.write("зарегистрирован на сайте", userForSaving);
 
         return userRepository.save(userForSaving);
     }

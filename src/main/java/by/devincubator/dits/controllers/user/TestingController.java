@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -47,7 +48,7 @@ public class TestingController {
     @Transactional
     public String saveUserAnswers(Model model,
                                   @ModelAttribute(name = "testPassing") TestPassingDTO testPassing,
-                                  @RequestParam("userAnswersIds") List<Integer> userAnswersIds) {
+                                  @RequestParam("userAnswersIds") List<Integer> userAnswersIds) throws SQLException {
 
         List<Answer> answers = answerService.findAnswersById(userAnswersIds);
 

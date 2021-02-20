@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -31,7 +32,7 @@ public class UserApproveController {
     }
 
     @PostMapping(value = "/approveUser")
-    public ModelAndView approveUser(@RequestParam(name = "userLogin") String login) {
+    public ModelAndView approveUser(@RequestParam(name = "userLogin") String login) throws SQLException {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("adminPages/approveUser");
         approveUserService.approveUser(login);
@@ -41,7 +42,7 @@ public class UserApproveController {
     }
 
     @GetMapping(value = "/approveAllUsers")
-    public ModelAndView approveAllUser() {
+    public ModelAndView approveAllUser() throws SQLException {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("adminPages/creationOptions");
         approveUserService.approveAllUsers();

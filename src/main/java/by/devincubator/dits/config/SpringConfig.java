@@ -24,7 +24,8 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan({"by.devincubator.dits.controllers", "by.devincubator.dits.services",
-        "by.devincubator.dits.repository", "by.devincubator.dits.entities", "by.devincubator.dits.config"})
+        "by.devincubator.dits.repository", "by.devincubator.dits.entities", "by.devincubator.dits.config",
+        "by.devincubator.dits.logger"})
 @EnableWebMvc
 //@EnableJpaRepositories("by.devincubator.dits.repository")
 @EnableTransactionManagement
